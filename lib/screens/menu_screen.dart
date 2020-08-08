@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -79,42 +80,16 @@ class _MenuScreenState extends State<MenuScreen> {
             SizedBox(height: SizeConfig.heightMultiplier*2,),
             Container(
                 margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
+              //  padding: EdgeInsets.only(left:24.0,right: 24),
                 width: SizeConfig.widthMultiplier*100,
                 decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    border: Border.all(color: Colors.grey[300],),
                     borderRadius: BorderRadius.all(Radius.circular(10))
                 ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
-            ),
-          SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                border: Border.all(color: Colors.grey)
-              ),
-              margin: EdgeInsets.only(left: 20,right: 20),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(left: 10,right: 10),
-                    child: Row(
+                child: Container(
+                  padding: EdgeInsets.only(left: 5),
+                  child: ExpansionTile(
+                    title: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text('Catogery 3'),
@@ -125,251 +100,865 @@ class _MenuScreenState extends State<MenuScreen> {
                           ),
                           margin: EdgeInsets.only(left: 20),
 
-                          padding: EdgeInsets.only(left: 8,right: 8,top: 4,bottom: 4),
+                          padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
                           child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
                               color: Colors.white,fontSize: AppFontSize.s16
                           ),),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(height: SizeConfig.heightMultiplier*1,),
-                  Container(
-                    margin: EdgeInsets.only(left: 10,right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('DISH 1'),
-                        Switch(
-                          value: isSwitched,
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitched = value;
-                              //  updateClock(value);
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
 
-                            });
-                          },
-                          activeTrackColor: Colors.grey,
-                          activeColor: Colors.blue,
-                          inactiveThumbColor: Colors.blue,
+                        ),
+                      //  margin: EdgeInsets.only(left: 10,right: 10),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              padding: EdgeInsets.only(left: 10,right: 10),
+                            ),
+
+                            Container(
+                              margin: EdgeInsets.only(left: 10,right: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text('DISH 1'),
+                                  Switch(
+                                    value: isSwitched,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isSwitched = value;
+                                        //  updateClock(value);
+
+                                      });
+                                    },
+                                    activeTrackColor: Colors.grey,
+                                    activeColor: Colors.blue,
+                                    inactiveThumbColor: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.heightMultiplier * 1,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 10,right: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text('DISH 2'),
+                                  Switch(
+                                    value: isSwitched,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isSwitched = value;
+                                        //  updateClock(value);
+
+                                      });
+                                    },
+                                    activeTrackColor: Colors.grey,
+                                    activeColor: Colors.blue,
+                                    inactiveThumbColor: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.heightMultiplier * 1,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 10,right: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text('DISH 3'),
+                                  Switch(
+                                    value: isSwitched,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isSwitched = value;
+                                        //  updateClock(value);
+
+                                      });
+                                    },
+                                    activeTrackColor: Colors.grey,
+                                    activeColor: Colors.blue,
+                                    inactiveThumbColor: Colors.blue,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: SizeConfig.heightMultiplier * 1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ),
+            SizedBox(height: SizeConfig.heightMultiplier*2,),
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            //  padding: EdgeInsets.only(left:24.0,right: 24),
+            width: SizeConfig.widthMultiplier*100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300],),
+                borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Catogery 3'),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      margin: EdgeInsets.only(left: 20),
+
+                      padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+                      child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white,fontSize: AppFontSize.s16
+                      ),),
+                    ),
+                  ],
+                ),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                    ),
+                    //  margin: EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10,right: 10),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 1'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 2'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 3'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10,right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('DISH 2'),
-                        Switch(
-                          value: isSwitched,
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitched = value;
-                              //  updateClock(value);
-
-                            });
-                          },
-                          activeTrackColor: Colors.grey,
-                          activeColor: Colors.blue,
-                          inactiveThumbColor: Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10,right: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('DISH 3'),
-                        Switch(
-                          value: isSwitched,
-                          onChanged: (value) {
-                            setState(() {
-                              isSwitched = value;
-                              //  updateClock(value);
-
-                            });
-                          },
-                          activeTrackColor: Colors.grey,
-                          activeColor: Colors.blue,
-                          inactiveThumbColor: Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 1,
                   ),
                 ],
               ),
             ),
+          ),
+            SizedBox(height: SizeConfig.heightMultiplier*2,),
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            //  padding: EdgeInsets.only(left:24.0,right: 24),
+            width: SizeConfig.widthMultiplier*100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300],),
+                borderRadius: BorderRadius.all(Radius.circular(10))
+            ),
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Catogery 3'),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      margin: EdgeInsets.only(left: 20),
 
+                      padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+                      child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white,fontSize: AppFontSize.s16
+                      ),),
+                    ),
+                  ],
+                ),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
 
-            SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
-                width: SizeConfig.widthMultiplier*100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
+                    ),
+                    //  margin: EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10,right: 10),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 1'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 2'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 3'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
-                width: SizeConfig.widthMultiplier*100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            //  padding: EdgeInsets.only(left:24.0,right: 24),
+            width: SizeConfig.widthMultiplier*100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300],),
+                borderRadius: BorderRadius.all(Radius.circular(10))
             ),
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Catogery 3'),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      margin: EdgeInsets.only(left: 20),
+
+                      padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+                      child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white,fontSize: AppFontSize.s16
+                      ),),
+                    ),
+                  ],
+                ),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                    ),
+                    //  margin: EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10,right: 10),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 1'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 2'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 3'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
-                width: SizeConfig.widthMultiplier*100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            //  padding: EdgeInsets.only(left:24.0,right: 24),
+            width: SizeConfig.widthMultiplier*100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300],),
+                borderRadius: BorderRadius.all(Radius.circular(10))
             ),
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Catogery 3'),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      margin: EdgeInsets.only(left: 20),
+
+                      padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+                      child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white,fontSize: AppFontSize.s16
+                      ),),
+                    ),
+                  ],
+                ),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                    ),
+                    //  margin: EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10,right: 10),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 1'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 2'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 3'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
-                width: SizeConfig.widthMultiplier*100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            //  padding: EdgeInsets.only(left:24.0,right: 24),
+            width: SizeConfig.widthMultiplier*100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300],),
+                borderRadius: BorderRadius.all(Radius.circular(10))
             ),
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Catogery 3'),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
+                      ),
+                      margin: EdgeInsets.only(left: 20),
+
+                      padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+                      child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white,fontSize: AppFontSize.s16
+                      ),),
+                    ),
+                  ],
+                ),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                    ),
+                    //  margin: EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10,right: 10),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 1'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 2'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 3'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
-                width: SizeConfig.widthMultiplier*100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
-                      ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
+          Container(
+            margin: EdgeInsets.only(left: 20,right: 20),
+            //  padding: EdgeInsets.only(left:24.0,right: 24),
+            width: SizeConfig.widthMultiplier*100,
+            decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey[300],),
+                borderRadius: BorderRadius.all(Radius.circular(10))
             ),
-            SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-                margin: EdgeInsets.only(left: 20,right: 20),
-                padding: EdgeInsets.only(left:24.0,right: 24),
-                width: SizeConfig.widthMultiplier*100,
-                decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.all(Radius.circular(10))
-                ),
-                child: new DropdownButton<String>(
-                  isExpanded: true,
-                  items: <String>['Usa', 'China','India'].map((String value) {
-                    return new DropdownMenuItem<String>(
-                      value: value,
-                      child: new Text(value,style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontSize: AppFontSize.s14)
+            child: Container(
+              padding: EdgeInsets.only(left: 5),
+              child: ExpansionTile(
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text('Catogery 3'),
+                    Container(
+                      decoration: BoxDecoration(
+                          color: AppTheme.primaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(20))
                       ),
-                    );
-                  }).toList(),
-                  onChanged: (String cValue) {
-                    catecory1 = cValue;
-                    setState(() {
-                    },);
-                  },value: catecory1,
-                )
+                      margin: EdgeInsets.only(left: 20),
+
+                      padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+                      child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white,fontSize: AppFontSize.s16
+                      ),),
+                    ),
+                  ],
+                ),
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+
+                    ),
+                    //  margin: EdgeInsets.only(left: 10,right: 10),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 10,right: 10),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 1'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 2'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        Container(
+                          margin: EdgeInsets.only(left: 10,right: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text('DISH 3'),
+                              Switch(
+                                value: isSwitched,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                    //  updateClock(value);
+
+                                  });
+                                },
+                                activeTrackColor: Colors.grey,
+                                activeColor: Colors.blue,
+                                inactiveThumbColor: Colors.blue,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
+          ),
 
        /*   SizedBox(height: SizeConfig.heightMultiplier*2,),
             Container(

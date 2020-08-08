@@ -40,22 +40,18 @@ class _homeScreenState extends State<OrderListScreen> {
     );
   }
   Widget UiSearch() {
-    return Container(
-      width: SizeConfig.widthMultiplier * 100,
+    return Card(
+      child: Container(
+        width: SizeConfig.widthMultiplier * 100,
+        padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
 
-      child: Card(
         child: ListTile(
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text('NAME'),
-              Text('S.NO'),
-            ],
+          title: Text('Nirmal Vishwas'),
+          trailing:  Text("S No. 501234"),
+          subtitle: Text(
+            "9784958598",
+
           ),
-          subtitle: Text("CONTACT NO."),
-
-
-
         ),
       ),
     );

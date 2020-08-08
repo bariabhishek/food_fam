@@ -12,7 +12,7 @@ class _order_historyState extends State<order_history> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:   AppTheme.primaryColor,
+        backgroundColor: AppTheme.primaryColor,
         leading: Icon(
           Icons.arrow_back,
           color: Colors.white,

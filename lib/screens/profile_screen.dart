@@ -12,6 +12,7 @@ class _foodfamState extends State<foodfamProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: AppTheme.primaryColor,
         leading: Icon(
           Icons.arrow_back,
@@ -19,10 +20,7 @@ class _foodfamState extends State<foodfamProfile> {
         ),
         title: Text(
           "PROFILE",
-          style: AppTheme.textStyle.lightHeading.copyWith(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: AppFontSize.s18),
+        
         ),
       ),
       body: SingleChildScrollView(
@@ -30,6 +28,7 @@ class _foodfamState extends State<foodfamProfile> {
           children: <Widget>[
 
             Container(
+              padding: EdgeInsets.all(12),
               decoration: BoxDecoration(
                   color: AppTheme.primaryColor,
                   borderRadius: BorderRadius.all(Radius.circular(2))),
@@ -46,9 +45,9 @@ class _foodfamState extends State<foodfamProfile> {
                   Text(
                     "Restaurant Name",
                     style: AppTheme.textStyle.lightHeading.copyWith(
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w500,
                         color: Colors.white,
-                        fontSize: AppFontSize.s25),
+                        fontSize: AppFontSize.s22),
                   ),
                 ],
               ),

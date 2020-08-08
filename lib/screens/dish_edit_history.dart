@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/size_config.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 
 class DishEdit extends StatefulWidget {
   @override
@@ -106,6 +107,28 @@ class _DishEditState extends State<DishEdit> {
             SizedBox(
               height: SizeConfig.heightMultiplier * 4,
             ),
+           Container(
+             child: Row(
+
+               children: <Widget>[
+                 Radio(),
+                 Text('Veg',style: AppTheme.textStyle.lightHeading.copyWith(
+                     fontSize: AppFontSize.s18
+                 ),),
+                 Radio(),
+                 Text('Non-Veg',style: AppTheme.textStyle.lightHeading.copyWith(
+                     fontSize: AppFontSize.s18
+                 ),),
+                 Radio(),
+                 Text('Egg',style: AppTheme.textStyle.lightHeading.copyWith(
+                   fontSize: AppFontSize.s18
+                 ),),
+               ],
+             ),
+           ),
+            SizedBox(
+              height: SizeConfig.heightMultiplier * 2,
+            ),
             Container(
               margin: EdgeInsets.only(left: 10,right: 10),
               child: Row(
@@ -157,9 +180,8 @@ class _DishEditState extends State<DishEdit> {
             SizedBox(
               height: SizeConfig.heightMultiplier * 2,
             ),
+
             Container(
-
-
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[

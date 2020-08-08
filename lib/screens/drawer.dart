@@ -8,6 +8,8 @@ import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/size_config.dart';
 
+import 'dish_edit_history.dart';
+
 class AllDrawerScreen extends StatefulWidget {
   @override
   _AllDrawerScreenState createState() => _AllDrawerScreenState();
@@ -76,20 +78,61 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
                 fontSize: AppFontSize.s20
             ),),
           ),
-          ListTile(
-            onTap: (){
-              AppRoutes.goto(context, OrderDetailsPic());
-            },
-         //   leading: Icon(Icons.notifications_none,color: Colors.black),
-            title: Text('Insights',style: AppTheme.textStyle.lightHeading.copyWith(
-                fontSize: AppFontSize.s20
-            ),),
-          ),
-          SizedBox(height: SizeConfig.heightMultiplier*2,),
-          Divider(
-            thickness: 2,
-            color: Colors.grey,),
-          SizedBox(height: SizeConfig.heightMultiplier*2,),
+
+             Container(
+
+              child: ExpansionTile(
+                title: Text('Insights',style: AppTheme.textStyle.lightHeading.copyWith(
+                    fontSize: AppFontSize.s20
+                ),),
+                children: <Widget>[
+                  Container(
+
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 1,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            AppRoutes.goto(context, DishEdit());
+                          },
+                          child: Container(
+
+                            child: Text('Sales Report',style: AppTheme.textStyle.lightHeading.copyWith(
+                                fontSize: AppFontSize.s20
+                            ),),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 2,
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            AppRoutes.goto(context, OrderDetailsPic());
+                          },
+                          child: Container(
+
+                            child: Text('Dish Performance',style: AppTheme.textStyle.lightHeading.copyWith(
+                                fontSize: AppFontSize.s20
+                            ),),
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.heightMultiplier * 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+
+
+
           ListTile(
             onTap: (){
           //    AppRoutes.goto(context,SettingScreen());
@@ -110,6 +153,32 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
         //    trailing: Icon(Icons.arrow_forward_ios,size: 18,),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget tabdraw() {
+    return Container(
+      padding: EdgeInsets.only(left: 5),
+      child: ExpansionTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('Catogery 3'),
+            Container(
+              decoration: BoxDecoration(
+                  color: AppTheme.primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+              ),
+              margin: EdgeInsets.only(left: 20),
+
+              padding: EdgeInsets.only(left: 12,right: 12,top: 8,bottom: 8),
+              child: Text('Add DISH',style: AppTheme.textStyle.lightHeading.copyWith(
+                  color: Colors.white,fontSize: AppFontSize.s16
+              ),),
+            ),
+          ],
+        ),
       ),
     );
   }

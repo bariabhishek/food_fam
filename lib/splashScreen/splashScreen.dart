@@ -52,22 +52,24 @@ class _SplashScreenState extends State<SplashScreen> {
       left: false,
       top: false,
       child: Scaffold(
-          body: Container(
-            width: double.maxFinite,
-            color: Colors.white,
-            child:    Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image(
-                    // color:Colors.white,
+          body: Stack(
+            children: <Widget>[
+              Image.asset(Assets.background,width: SizeConfig.heightMultiplier*100,height: SizeConfig.heightMultiplier*100,
+              fit: BoxFit.fill,),
+              Center(
+                child: Container(
+                  width: 250,
+                  height: 120,
+                  color: Colors.white,
+                  child:  Image(
                       width: SizeConfig.widthMultiplier * 80,
                       fit: BoxFit.contain,
                       image: new AssetImage(Assets.logo)),
-                ],
-              ),
-            ),
-          )),
+                ),
+              )
+            ],
+          )
+      ),
     );
   }
 

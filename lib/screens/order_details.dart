@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 class OrderDetailsPic extends StatefulWidget {
@@ -22,27 +23,27 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
           Container(
 
             padding: EdgeInsets.all(16),
-            color: Colors.grey,
+            color: Colors.grey[400],
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                Text('NAME',style: AppTheme.textStyle.lightHeading.copyWith(
+                Text('Madhu panday',style: AppTheme.textStyle.lightHeading.copyWith(
                   color: Colors.white
                 ),),
                 SizedBox(height: SizeConfig.heightMultiplier*1,),
-                Text('COntect no.',style: AppTheme.textStyle.lightHeading.copyWith(
+                Text('800987654',style: AppTheme.textStyle.lightHeading.copyWith(
                     color: Colors.white
                 ),),
               ],),
-              Text('S.NO',style: AppTheme.textStyle.lightHeading.copyWith(
+              Text('S.NO/1029384',style: AppTheme.textStyle.lightHeading.copyWith(
                   color: Colors.white
               ),),
             ],),
           ),
-            SizedBox(height: SizeConfig.heightMultiplier*1,),
+            SizedBox(height: SizeConfig.heightMultiplier*2,),
           Text('Totel Items ( 2 )',style: AppTheme.textStyle.lightHeading.copyWith(
               color: Colors.black,fontSize: AppFontSize.s18,
           ),),
@@ -112,9 +113,9 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
 
   Widget orderList() {
     return ListTile(
-
-      title: Text('. Dish name'),
-      subtitle: Text('  costomization details'),
+      leading: Image.asset(Assets.veg,height: 16,width: 16,),
+      title: Text('Dish name'),
+      subtitle: Text('costomization details'),
       trailing: Text('₹0000'),
     );
   }
