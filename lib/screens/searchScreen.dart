@@ -7,6 +7,7 @@ import 'package:food_fam/utils/size_config.dart';
 
 import 'drawer.dart';
 import 'order.dart';
+import 'order_details.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -112,7 +113,7 @@ class _foodfamState extends State<SearchScreen> {
                 shrinkWrap: true,
                 itemCount: 3,
                 itemBuilder: (context, int index) {
-                  return suggested();
+                  return suggested(context);
                 },
               )
             ],
@@ -131,7 +132,7 @@ Widget UiSearch(BuildContext context) {
 
       child: ListTile(
         onTap: (){
-          AppRoutes.goto(context, order_history());
+          AppRoutes.goto(context, OrderDetailsPic("pendeing"));
         },
         title: Text('Shivam Vishwas'),
         trailing:  Text("S No. 501234"),
@@ -144,18 +145,23 @@ Widget UiSearch(BuildContext context) {
   );
 }
 
-Widget suggested() {
-  return Card(
-    child: Container(
-      width: SizeConfig.widthMultiplier * 100,
-      padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
+Widget suggested(BuildContext context) {
+  return InkWell(
+    onTap: (){
+      AppRoutes.goto(context, OrderDetailsPic("approverd"));
+    },
+    child: Card(
+      child: Container(
+        width: SizeConfig.widthMultiplier * 100,
+        padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
 
-      child: ListTile(
-        title: Text('Nirmal Vishwas'),
-        trailing:  Text("S No. 501234"),
-        subtitle: Text(
-          "9784958598",
+        child: ListTile(
+          title: Text('Nirmal Vishwas'),
+          trailing:  Text("S No. 501234"),
+          subtitle: Text(
+            "9784958598",
 
+          ),
         ),
       ),
     ),

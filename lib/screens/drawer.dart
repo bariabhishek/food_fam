@@ -97,7 +97,7 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            AppRoutes.goto(context, DishEdit());
+
                           },
                           child: Container(
 
@@ -111,7 +111,7 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            AppRoutes.goto(context, OrderDetailsPic());
+
                           },
                           child: Container(
 

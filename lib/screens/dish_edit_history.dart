@@ -14,7 +14,15 @@ class _DishEditState extends State<DishEdit> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      appBar: AppBar(
+        backgroundColor: AppTheme.primaryColor,
+        title: Text('Add Dish',
+          style: AppTheme.textStyle.lightHeading.copyWith(
+              color: Colors.white
+          ),),
+
+      ),
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -22,16 +30,26 @@ class _DishEditState extends State<DishEdit> {
             Row(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(left: 10),
-                  padding: EdgeInsets.only(left: 20),
-                  alignment: Alignment.centerLeft,
-                  height: SizeConfig.heightMultiplier*5,
-                 width: SizeConfig.widthMultiplier*60,
-                    color: AppTheme.primaryColor,
-                    child: Text('Dish Name',
-                    style: AppTheme.textStyle.lightHeading.copyWith(
-                      color: Colors.white
-                    ),)),
+                  margin: EdgeInsets.all(8),
+                  width: SizeConfig.widthMultiplier*80,
+                  height: SizeConfig.heightMultiplier * 7,
+                  child: TextField(
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                      hintText: 'Dish Name',
+                      filled: true,
+                      enabledBorder: OutlineInputBorder(
+                        // borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        //  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      fillColor: Colors.white,
+                    ),
+                  ),
+                ),
                 Container(
                     margin: EdgeInsets.only(left: 10),
                     child: Icon(Icons.star_border)),
@@ -218,14 +236,17 @@ class _DishEditState extends State<DishEdit> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Icon(Icons.delete_forever,color: Colors.white,),
-                        Text('Save',style: AppTheme.textStyle.lightHeading.copyWith(
+                        Text('Delete',style: AppTheme.textStyle.lightHeading.copyWith(
                             color: Colors.white
                         ),),
                       ],
                     ),)
                 ],
               ),
-            )
+            ),
+            SizedBox(
+              height: SizeConfig.heightMultiplier * 1,
+            ),
           ],
         ),
       ),

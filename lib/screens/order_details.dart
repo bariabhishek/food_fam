@@ -5,6 +5,9 @@ import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 class OrderDetailsPic extends StatefulWidget {
+  String type;
+  OrderDetailsPic(@required this.type);
+
   @override
   _OrderDetailsPicState createState() => _OrderDetailsPicState();
 }
@@ -68,7 +71,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
               ],
             ),
             SizedBox(height: SizeConfig.heightMultiplier*4,),
-            Container(
+            widget.type=="pendeing"?Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black)
               ),
@@ -78,7 +81,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Text('Accept',style: AppTheme.textStyle.heading1.copyWith(
+                  Text('Accept/Reject',style: AppTheme.textStyle.heading1.copyWith(
                     color: Colors.black,fontSize: AppFontSize.s18,
                   ),),
                   Container(
@@ -105,7 +108,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
                   ),
                 ],
               ),
-            )
+            ):Container()
         ],),
       ),
     );
