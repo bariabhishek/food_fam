@@ -1,9 +1,17 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:food_fam/api/API.dart';
 import 'package:food_fam/screens/searchScreen.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
+import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
+
+import 'order_list.dart';
 
 class LogInScreen extends StatefulWidget {
   @override
@@ -11,6 +19,7 @@ class LogInScreen extends StatefulWidget {
 }
 
 class _LogInScreenState extends State<LogInScreen> {
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,7 +80,8 @@ class _LogInScreenState extends State<LogInScreen> {
             SizedBox(height: SizeConfig.heightMultiplier*10,),
             GestureDetector(
               onTap: (){
-                AppRoutes.makeFirst(context, SearchScreen());
+                login();
+              //  AppRoutes.makeFirst(context, SearchScreen());
               },
               child: Container(
                 padding: EdgeInsets.only(top: 12,bottom: 12,left: 16,right: 16),
@@ -93,5 +103,67 @@ class _LogInScreenState extends State<LogInScreen> {
           ],),)
       ],)
     );
+  }
+  login() async {
+    loadProgress();
+ /*   Response response;
+    Dio dio = new Dio();
+    response = await  dio.post(API.LoginAPi, data: {"restaurantid": "FOODFAM0006", "password": "1"});
+    print(response.data.toString());
+
+    print(response.data.toString());
+*/
+
+
+
+      Map<String, String> args = new Map();
+    args["restaurantid"]="FOODFAM0006";
+    args["password"]="1";
+
+
+   // var body = json.encode(args);
+
+    API.post(API.LoginAPi,args,"").then((response){
+      loadProgress();
+      print(response.statusCode.toString());
+      print(response.body.toString());
+
+      if(response.statusCode==200)
+      {
+        final data = json.decode(response.body);
+
+       // ShareMananer.setDetails(data['token'], true);
+        print(data['success']);
+
+        if(data['success']==1){
+
+          String id = data['detail']['id'].toString();
+          String restaurantid = data['detail']['restaurantid'].toString();
+          String Rname = data['detail']['Rname'].toString();
+          String ownername = data['detail']['ownername'].toString();
+          String ownermobile = data['detail']['ownermobile'].toString();
+
+          ShareMananer.setDetails(id,true,restaurantid,Rname,ownermobile,ownername );
+          print(id);
+          Future.delayed(Duration(seconds: 2), () {
+
+              AppRoutes.makeFirst(context, OrderListScreen());
+          });
+        }else{
+          showDisplayAllert(context: context,isSucces: false,message: data['message']);
+        }
+
+      }
+      else{
+        showDisplayAllert(context: context,isSucces: false,message: "Server error");
+      }
+
+    });
+  }
+  loadProgress(){
+    isLoading=!isLoading;
+    setState(() {
+
+    });
   }
 }

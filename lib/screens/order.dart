@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:food_fam/api/API.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/ShareManager.dart';
+import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 class order_history extends StatefulWidget {
@@ -8,6 +13,14 @@ class order_history extends StatefulWidget {
 }
 
 class _order_historyState extends State<order_history> {
+  bool isLoading=false;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    orderList();
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,6 +67,42 @@ class _order_historyState extends State<order_history> {
       ),
     );
   }
+  orderList(){
+    loadProgress();
+    Map<String, dynamic> args2 = {
+      'restaurantid': 32,
+    };
+    //  var body = json.encode(args);
+
+    API.postblanck(API.OrderList, args2).then((response){
+      loadProgress();
+      print(response.statusCode.toString());
+      print(response.body.toString());
+      if(response.statusCode==200)
+      {
+        final data = json.decode(response.body);
+
+      //  ShareMananer.setDetails(data['token'], true);
+        print(data['token']);
+
+        Future.delayed(Duration(seconds: 2), () {
+          //  AppRoutes.makeFirst(context, VehicalCreatedScreen());
+        });
+
+
+      }
+      else{
+        showDisplayAllert(context: context,isSucces: false,message: "Server error");
+      }
+
+    });
+  }
+  loadProgress(){
+    isLoading=!isLoading;
+    setState(() {
+
+    });
+  }
 }
 
 Widget UiSearch() {
@@ -74,12 +123,8 @@ Widget UiSearch() {
               ],
             ),
             subtitle: Text("CONTACT NO."),
-            
-          
-          
         ),
       ),
     ),
   );
-  
 }

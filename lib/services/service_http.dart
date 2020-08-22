@@ -20,19 +20,27 @@ class HttpService {
     return await _httpBaseClient.get(url,headers: headers);
   }
 
-  Future<http.Response> post(String url,String args,String token) async{
+  Future<http.Response> post(
+      String url,  Map<String, String> args, String token) async {
     final headers = {
-       HttpHeaders.contentTypeHeader: 'application/json',
-     // HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
-    HttpHeaders.authorizationHeader:"Bearer "+token
+    //  HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded',
+     // HttpHeaders.acceptHeader: '*/*',
+     // HttpHeaders.authorizationHeader: "Bearer " + token,
     };
-
-
-
-
-    return await _httpBaseClient.post(url, body: args,headers: headers);
+    return await _httpBaseClient.post(url,
+        body: args, headers: headers);
   }
 
+  Future<http.Response> postblanck(
+      String url, String args) async {
+    final headers = {
+      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.authorizationHeader: "Bearer " ,
+    };
+    return await _httpBaseClient.post(url,
+        body: args, headers: headers);
+  }
 
   HttpService._() : _httpBaseClient = _HttpBaseClient(http.Client());
   static HttpService getInstance() => _httpService;

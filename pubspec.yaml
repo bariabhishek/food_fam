@@ -37,6 +37,7 @@ dependencies:
   connectivity: ^0.4.8+5
   flushbar: 1.10.2
   grouped_buttons: ^1.0.4
+  dio: ^3.0.10
 
 dev_dependencies:
   flutter_test:
