@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:food_fam/screens/login.dart';
+import 'package:food_fam/screens/searchScreen.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
@@ -25,19 +26,17 @@ class _SplashScreenState extends State<SplashScreen> {
   //Call screen based on conditions
   callScreen() async {
 
-
-    ShareMananer.isLogin().then((userDetails) {
+    ShareMananer.getUserDetails().then((userDetails) {
       bool isLogin = userDetails["login"];
 
-
       if(!isLogin){
-        Future.delayed(Duration(seconds: 3), () {
+        Future.delayed(Duration(seconds: 2), () {
           AppRoutes.makeFirst(context, LogInScreen());
         });
       }
       else{
-        Future.delayed(Duration(seconds: 3), () {
-        //  AppRoutes.makeFirst(context, VehicalCreatedScreen());
+        Future.delayed(Duration(seconds: 2), () {
+          AppRoutes.makeFirst(context, SearchScreen());
         });
       }
     });
@@ -90,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
 //    }
 
 
-    callScreen();
+   callScreen();
   }
 
 

@@ -7,7 +7,7 @@ import 'package:food_fam/utils/size_config.dart';
 
 void showDisplayAllert({BuildContext context,bool isSucces,String message}){
   Flushbar(
-    flushbarPosition: FlushbarPosition.TOP,
+    flushbarPosition: FlushbarPosition.BOTTOM,
     flushbarStyle: FlushbarStyle.FLOATING,
     backgroundColor:isSucces?Colors.green:Colors.red,
     boxShadows: [BoxShadow(color: Colors.grey, offset: Offset(0.0, 2.0), blurRadius: 10.0)],

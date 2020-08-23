@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/app_routes.dart';
+import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
-
+import 'package:food_fam/utils/ShareManager.dart';
 import 'dish_edit_history.dart';
+import 'model/category_model.dart';
+import 'package:food_fam/api/API.dart';
 
 class MenuScreen extends StatefulWidget {
   @override
@@ -13,6 +18,22 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> {
   var isSwitched = true;
+  var category_add_controller=new TextEditingController();
+  var resId;
+  List<CategoryModel> _categoryCard=List();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    ShareMananer.getUserDetails().then((userDetails) {
+      resId = userDetails['token'];
+      print(resId);
+      fetchData(resId);
+    });
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +42,7 @@ class _MenuScreenState extends State<MenuScreen> {
         title: Text('Menu'),
         backgroundColor:  AppTheme.primaryColor,
         actions: <Widget>[
-          Container(
+          /*Container(
             margin: EdgeInsets.only(right: 10),
               alignment:Alignment.center,child: Text('Preview',style:
             AppTheme.textStyle.lightHeading.copyWith(fontSize: AppFontSize.s20,color: Colors.white)
@@ -29,7 +50,7 @@ class _MenuScreenState extends State<MenuScreen> {
           Container(
               margin: EdgeInsets.only(right: 50),
               alignment:Alignment.center,
-              child: Text('Save')),
+              child: Text('Save')),*/
         ],
       ),
           body: SingleChildScrollView(
@@ -61,24 +82,26 @@ class _MenuScreenState extends State<MenuScreen> {
     ),
             ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-            Container(
-              decoration: BoxDecoration(
-                  color: AppTheme.primaryColor,
-                borderRadius: BorderRadius.all(Radius.circular(20))
+            InkWell(
+              onTap: (){
+                _addCategoryDialog();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: AppTheme.primaryColor,
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                margin: EdgeInsets.only(left: 20),
+                padding: EdgeInsets.all(8),
+                child: Text('Add Category',style: AppTheme.textStyle.lightHeading.copyWith(
+                  color: Colors.white,fontSize: AppFontSize.s16
+                ),),
               ),
-              margin: EdgeInsets.only(left: 20),
-
-              padding: EdgeInsets.all(8),
-              child: Text('Add Category',style: AppTheme.textStyle.lightHeading.copyWith(
-                color: Colors.white,fontSize: AppFontSize.s16
-              ),),
             ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-            
-            ListView.builder(itemBuilder: (context,index){
-              
+            ListView.builder(
+              itemBuilder: (context,index){
               return _categoreyContainer(index);
-              
             },
               shrinkWrap: true,
               itemCount: 5,)
@@ -162,7 +185,6 @@ class _MenuScreenState extends State<MenuScreen> {
                         setState(() {
                           isSwitched = value;
                           //  updateClock(value);
-
                         });
                       },
                       activeTrackColor: Colors.grey,
@@ -544,5 +566,72 @@ class _MenuScreenState extends State<MenuScreen> {
         ),
       ),
     );
+  }
+
+  _addCategoryDialog() {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Add Category'),
+          content: TextField(
+            controller: category_add_controller,
+            decoration: InputDecoration(
+              hintText: "Italian",
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+            FlatButton(
+              onPressed: () {
+
+              },
+              child: Text("Add"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+  void fetchData(resId) async {
+    Map<String, String> args = new Map();
+    args["restaurantid"] = resId;
+
+    API.post(API.categoryItem, args, "").then((response) {
+      print(response.body.toString());
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+
+        if (data['success'] == 1) {
+          List list = data["detail"];
+          for (int i = 0; i < list.length; i++) {
+            var id = list[i]["id"].toString();
+            var restaurantid = list[i]["restaurantid"].toString();
+            var name = list[i]["name"].toString();
+            var createat = list[i]["createat"].toString();
+            var blockstatus = list[i]["blockstatus"].toString();
+            _categoryCard.add(new CategoryModel(id, restaurantid, name, createat, blockstatus));
+          }
+
+
+        } else {
+          showDisplayAllert(
+              context: context, isSucces: false, message: data['message']);
+        }
+      } else {
+        showDisplayAllert(
+            context: context, isSucces: false, message: "Server error");
+      }
+    });
+    // print();
   }
 }
