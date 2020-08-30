@@ -17,6 +17,7 @@ class SearchScreen extends StatefulWidget {
 class _foodfamState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       drawer: AllDrawerScreen(),
       appBar: AppBar(
@@ -28,6 +29,7 @@ class _foodfamState extends State<SearchScreen> {
       ),
 
       body: SingleChildScrollView(
+
         child: Container(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,4 +168,5 @@ Widget suggested(BuildContext context) {
       ),
     ),
   );
+
 }

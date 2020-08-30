@@ -27,9 +27,10 @@ class _SplashScreenState extends State<SplashScreen> {
   callScreen() async {
 
     ShareMananer.getUserDetails().then((userDetails) {
-      bool isLogin = userDetails["login"];
+      bool isLogin = userDetails["login"]?? false;
+      String token = userDetails['token'];
 
-      if(!isLogin){
+      if(!isLogin || (token == null)){
         Future.delayed(Duration(seconds: 2), () {
           AppRoutes.makeFirst(context, LogInScreen());
         });

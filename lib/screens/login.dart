@@ -27,7 +27,7 @@ class _LogInScreenState extends State<LogInScreen> {
     // TODO: implement initState
     super.initState();
     _email_controller.text="FOODFAM0006";
-    _pass_controller.text="1";
+    _pass_controller.text="Admin@1";
   }
   @override
   Widget build(BuildContext context) {
@@ -151,7 +151,10 @@ class _LogInScreenState extends State<LogInScreen> {
   login() async {
 
 if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toString().isNotEmpty)
-{loadProgress();
+{
+  loadProgress();
+  _dialog();
+
     Map<String, String> args = new Map();
     args["restaurantid"] = _email_controller.text.toString();
     args["password"] = _pass_controller.text.toString();
@@ -197,5 +200,35 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
   loadProgress() {
     isLoading = !isLoading;
     setState(() {});
+
+  }
+
+  _dialog(){
+    if(isLoading){
+      showDialog(
+          context: this.context,
+          barrierDismissible: true,
+          builder: (context) {
+            return Dialog(
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            AppTheme.primaryColor),
+                      ),
+                    ),
+                    SizedBox(width: SizeConfig.widthMultiplier*2,),
+                    Text('Please Wait...', style: TextStyle()),
+                  ],
+                ),
+              ),
+            );
+          });
+    }
   }
 }
+
+/*child: ,*/

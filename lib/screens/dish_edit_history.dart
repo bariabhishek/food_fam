@@ -5,12 +5,24 @@ import 'package:food_fam/utils/size_config.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
 
 class DishEdit extends StatefulWidget {
+  String categoryId,subcategoryId;
+  DishEdit(this.categoryId, this.subcategoryId);
+
   @override
   _DishEditState createState() => _DishEditState();
 }
 
 class _DishEditState extends State<DishEdit> {
   bool isSwitched =true;
+  int instId;
+  var type;
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print(widget.categoryId + ""+ widget.subcategoryId);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,7 +141,14 @@ class _DishEditState extends State<DishEdit> {
              child: Row(
 
                children: <Widget>[
-                 Radio(),
+                 Radio(
+                   value: 1,
+                   groupValue: instId,
+                   onChanged: (value){
+                     instId=value;
+
+                   },
+                 ),
                  Text('Veg',style: AppTheme.textStyle.lightHeading.copyWith(
                      fontSize: AppFontSize.s18
                  ),),

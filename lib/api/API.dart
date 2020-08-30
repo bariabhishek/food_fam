@@ -15,7 +15,9 @@ class API {
   static String BASE_URL = "https://foodfam.in/api/";
   static String LoginAPi = BASE_URL+"login.php";
   static String OrderList = BASE_URL+"orderslist.php";
-  static String categoryItem = BASE_URL+"category.php";
+  static String categoryItem = BASE_URL+"menu.php";
+  static String addCategory = BASE_URL+"addcategory.php";
+  static String addSubCategory = BASE_URL+"addsubcategory.php";
 
 
   static Future<Response> post(String api, Map<String, String> args,String token) {
