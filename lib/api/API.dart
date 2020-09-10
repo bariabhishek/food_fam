@@ -16,7 +16,16 @@ class API {
   static String LoginAPi = BASE_URL+"login.php";
   static String OrderList = BASE_URL+"orderslist.php";
   static String categoryItem = BASE_URL+"menu.php";
+  static String subcatmenu = BASE_URL+"subcatmenu.php";
+  static String catmenu = BASE_URL+"catmenu.php";
+  static String dishmenu = BASE_URL+"dishmenu.php";
   static String addCategory = BASE_URL+"addcategory.php";
+  static String addDish = BASE_URL+"adddishes.php";
+  static String deleteCategory = BASE_URL+"deletecategory.php";
+  static String deleteSubcategory = BASE_URL+"deletesubcategory.php";
+  static String deleteDish = BASE_URL+"deletedish.php";
+  static String editCategory = BASE_URL+"editcategory.php";
+  static String editSubcategory = BASE_URL+"editsubcategory.php";
   static String addSubCategory = BASE_URL+"addsubcategory.php";
 
 

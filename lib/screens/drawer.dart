@@ -8,7 +8,7 @@ import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/size_config.dart';
 
-import 'dish_edit_history.dart';
+import 'dish_view_page.dart';
 
 class AllDrawerScreen extends StatefulWidget {
   @override

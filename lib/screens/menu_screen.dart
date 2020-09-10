@@ -58,70 +58,70 @@ class _MenuScreenState extends State<MenuScreen> {
               child: Text('Save')),*/
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.only(bottom: 20),
-          child: Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Categories',
-                              style: AppTheme.textStyle.lightHeading.copyWith(
-                                  fontSize: AppFontSize.s20,
-                                  color: Colors.black),
-                            )),
-                        Container(
-                          height: 40,
-                          width: SizeConfig.widthMultiplier * 50,
-                          decoration: BoxDecoration(
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(20)),
-                              border: Border.all(color: Colors.grey, width: 1)),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 2,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      _addCategoryDialog();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          color: AppTheme.primaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      margin: EdgeInsets.only(left: 20),
-                      padding: EdgeInsets.all(8),
-                      child: Text(
-                        'Add Category',
-                        style: AppTheme.textStyle.lightHeading.copyWith(
-                            color: Colors.white, fontSize: AppFontSize.s16),
+      body: Container(
+        margin: EdgeInsets.only(bottom: 20),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Container(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Categories',
+                            style: AppTheme.textStyle.lightHeading.copyWith(
+                                fontSize: AppFontSize.s20,
+                                color: Colors.black),
+                          )),
+                      Container(
+                        height: 40,
+                        width: SizeConfig.widthMultiplier * 50,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                            BorderRadius.all(Radius.circular(20)),
+                            border: Border.all(color: Colors.grey, width: 1)),
                       ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: SizeConfig.heightMultiplier * 2,
+                ),
+                InkWell(
+                  onTap: () {
+                    _addCategoryDialog();
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: AppTheme.primaryColor,
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    margin: EdgeInsets.only(left: 20),
+                    padding: EdgeInsets.all(8),
+                    child: Text(
+                      'Add Category',
+                      style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white, fontSize: AppFontSize.s16),
                     ),
                   ),
-                  SizedBox(
-                    height: SizeConfig.heightMultiplier * 2,
+                ),
+                SizedBox(
+                  height: SizeConfig.heightMultiplier * 2,
+                ),
+                _categoryList.isEmpty && !haveData
+                    ? Container(
+                  height: SizeConfig.heightMultiplier * 20,
+                  child: Center(
+                    child: Text("You haven't add any category"),
                   ),
-                  _categoryList.isEmpty && !haveData
-                      ? Container(
-                    height: SizeConfig.heightMultiplier * 10,
-                    child: Center(
-                      child: Text("You haven't add any category"),
-                    ),
-                  )
-                      : Container(
-                    height: SizeConfig.heightMultiplier * 70,
+                )
+                    : Expanded(
+                  child: RefreshIndicator(
+                    onRefresh:_refresh,
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return CategoryExpanseListItem(
@@ -137,30 +137,35 @@ class _MenuScreenState extends State<MenuScreen> {
                           print("ok");
                         });
                       },
-                      physics: BouncingScrollPhysics(),
+                      physics: AlwaysScrollableScrollPhysics(),
                       itemCount: _categoryList.length,
                     ),
                   ),
-                ],
-              ),
-              tempResponse != null
-                  ? SizedBox(width: 0)
-                  : Container(
-                height: SizeConfig.heightMultiplier * 100,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    valueColor: new AlwaysStoppedAnimation<Color>(
-                        AppTheme.primaryColor),
-                  ),
+                ),
+              ],
+            ),
+            tempResponse != null
+                ? SizedBox(width: 0)
+                : Container(
+              height: SizeConfig.heightMultiplier * 100,
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      AppTheme.primaryColor),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-
+  Future<void> _refresh() async {
+    if(_categoryList.isNotEmpty){
+      _categoryList.clear();
+      fetchData(resId);
+    }
+  }
   _addCategoryDialog() {
     showDialog<bool>(
       context: context,

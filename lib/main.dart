@@ -4,6 +4,8 @@ import 'package:food_fam/screens/menu_screen.dart';
 import 'package:food_fam/splashScreen/splashScreen.dart';
 import 'package:food_fam/utils/size_config.dart';
 
+import 'screens/dish_view_page.dart';
+
 void main(){
   runApp(MyApp());
 }
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
         SizeConfig().init(constraints, orientation);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: MenuScreen(),
+          home: SplashScreen(),
         );
       });
     });

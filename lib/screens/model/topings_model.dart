@@ -17,4 +17,11 @@ class ToppingsModel{
       this.price,
       this.description,
      );
+
+  Map<String, dynamic> toJson(){
+    return {
+      'name': this.name,
+      'price': this.price,
+    };
+  }
 }
