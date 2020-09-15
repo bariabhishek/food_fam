@@ -14,6 +14,7 @@ class API {
   //https://foodfam.in/api/login.php
   static String BASE_URL = "https://foodfam.in/api/";
   static String LoginAPi = BASE_URL+"login.php";
+  static String ProfileAPi = BASE_URL+"profile.php";
   static String OrderList = BASE_URL+"orderslist.php";
   static String categoryItem = BASE_URL+"menu.php";
   static String subcatmenu = BASE_URL+"subcatmenu.php";
@@ -27,6 +28,9 @@ class API {
   static String editCategory = BASE_URL+"editcategory.php";
   static String editSubcategory = BASE_URL+"editsubcategory.php";
   static String addSubCategory = BASE_URL+"addsubcategory.php";
+  static String coupanList = BASE_URL+"coupon.php";
+  static String coupanAdd = BASE_URL+"addcoupon.php";
+  static String coupanDelete= BASE_URL+"deletecoupon.php";
 
 
   static Future<Response> post(String api, Map<String, String> args,String token) {

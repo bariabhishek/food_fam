@@ -325,7 +325,7 @@ class _DishEditState extends State<DishViewScreen> {
                   itemBuilder: (cont, index) {
                     return ListTile(
                       contentPadding: EdgeInsets.symmetric(horizontal: 4),
-                      tileColor: Colors.white,
+                      //tileColor: Colors.white,
                       title: Text(
                         _toppingList[index].name,
                       ),

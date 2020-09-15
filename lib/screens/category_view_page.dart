@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:food_fam/api/API.dart';
@@ -9,14 +10,24 @@ import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import 'add_dish.dart';
 import 'dish_view_page.dart';
 import 'model/dish_model.dart';
 import 'subcategory_view_page.dart';
 
+import 'package:flutter/material.dart';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+
 class CategoryViewScreen extends StatefulWidget {
   var itemName, itemId;
+
+
+
 
   CategoryViewScreen(this.itemName, this.itemId);
 
@@ -32,6 +43,28 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
   var category_add_controller = TextEditingController();
   var diloagContext;
   bool haveData=true;
+  String startDate = 'StartDate';
+  DateTime selectedDate = DateTime.now();
+  File _cameraImage;
+  File _image;
+  final picker = ImagePicker();
+  String base64Image;
+
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        startDate = picked.toString();
+        startDate = DateFormat("dd-MMM-yyyy").format(DateTime.parse(startDate));
+        selectedDate = picked;
+        print("StartDate" + startDate + "  " + selectedDate.toString());
+      });
+  }
 
   @override
   void initState() {
@@ -45,6 +78,14 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
       _fetchData(resId);
     });
     setState(() {});
+  }
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = File(pickedFile.path);
+    });
   }
 
   @override
@@ -369,7 +410,7 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
                     Spacer(),
                     FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                      minWidth: 0,
+                     // minWidth: 0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       color: AppTheme.accentColor,
@@ -389,7 +430,7 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
                     ),
                     FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                      minWidth: 0,
+                   //   minWidth: 0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       color: AppTheme.accentColor,

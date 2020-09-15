@@ -1,5 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:food_fam/api/API.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/ShareManager.dart';
+import 'package:food_fam/utils/app_assets.dart';
+import 'package:food_fam/utils/app_routes.dart';
+import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 class foodfamProfile extends StatefulWidget {
@@ -7,7 +14,27 @@ class foodfamProfile extends StatefulWidget {
   _foodfamState createState() => _foodfamState();
 }
 
+
 class _foodfamState extends State<foodfamProfile> {
+  String Rname='';
+  String id='';
+  String ownermobile='';
+  String logo='';
+  String landmark='';
+//  String Rname='';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ShareMananer.getUserDetails().then((data){
+      id=data["token"].toString();
+      print(Rname);
+      profile();
+    });
+
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +63,21 @@ class _foodfamState extends State<foodfamProfile> {
               child: Column(
                 children: <Widget>[
                   Center(
-                    child: Icon(
-                      Icons.account_circle,
-                      size: 100,
-                      color: Colors.white,
-                    ),
+                    child:ClipRRect(
+
+                      borderRadius: BorderRadius.circular(100.0),
+                      /*  decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(100.0),
+      ),*/
+                      child:  FadeInImage.assetNetwork(
+                        width: 60.0,
+                        height: 60.0,
+                        placeholder: Assets.logo,image: logo,fit: BoxFit.cover,),
+                    )
                   ),
                   Text(
-                    "Restaurant Name",
+                    Rname.toString(),
                     style: AppTheme.textStyle.lightHeading.copyWith(
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
@@ -67,12 +101,18 @@ class _foodfamState extends State<foodfamProfile> {
                     color: AppTheme.primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(2))),
                 padding: EdgeInsets.all(12),
-                child: Text(
-                  "Owner/Contact Person",
-                  style: AppTheme.textStyle.lightHeading.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      fontSize: AppFontSize.s18),
+                child: Row(
+                  children: [
+                    Text(
+                      "Owner/Contact Person",
+                      style: AppTheme.textStyle.lightHeading.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: AppFontSize.s18),
+                    ),
+                    SizedBox(width: 10,),
+
+                  ],
                 ),
               ),
             ),
@@ -100,7 +140,7 @@ class _foodfamState extends State<foodfamProfile> {
                       maxLines: 15,
                       autocorrect: false,
                       decoration: InputDecoration(
-                        hintText: '0000000',
+                        hintText: ownermobile,
                         filled: true,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -183,7 +223,7 @@ class _foodfamState extends State<foodfamProfile> {
                       maxLines: 15,
                       autocorrect: false,
                       decoration: InputDecoration(
-                        hintText: 'Address',
+                        hintText: landmark,
                         filled: true,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -257,5 +297,66 @@ class _foodfamState extends State<foodfamProfile> {
         ),
       ),
     );
+  }
+
+  profile() async {
+   // loadProgress();
+    /*   Response response;
+    Dio dio = new Dio();
+    response = await  dio.post(API.LoginAPi, data: {"restaurantid": "FOODFAM0006", "password": "1"});
+    print(response.data.toString());
+
+    print(response.data.toString());
+*/
+
+
+
+    Map<String, String> args = new Map();
+    args["restaurantid"]=id;
+
+
+
+    // var body = json.encode(args);
+
+    API.post(API.ProfileAPi,args,"").then((response){
+    //  loadProgress();
+      print(response.statusCode.toString());
+      print(response.body.toString());
+
+      if(response.statusCode==200)
+      {
+        final data = json.decode(response.body);
+
+        print(data['success']);
+
+        if(data['success']==1){
+
+          String id = data['id'].toString();
+          String restaurantid = data['restaurantid'].toString();
+          Rname = data['Rname'].toString();
+          String ownername = data['ownername'].toString();
+          ownermobile = data['ownermobile'].toString();
+          logo = data['logo'].toString();
+          landmark = data['landmark'].toString();
+          print("Restorent name"+Rname.toString());
+      //    ShareMananer.setDetails(id,true,restaurantid,Rname,ownermobile,ownername );
+
+          Future.delayed(Duration(seconds: 2), () {
+
+            //AppRoutes.makeFirst(context, OrderListScreen());
+          });
+        }else{
+          showDisplayAllert(context: context,isSucces: false,message: data['message']);
+        }
+
+      }
+      else{
+        showDisplayAllert(context: context,isSucces: false,message: "Server error");
+      }
+      setState(() {
+
+      });
+
+    });
   }
 }

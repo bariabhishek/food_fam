@@ -38,6 +38,7 @@ dependencies:
   flushbar: 1.10.2
   grouped_buttons: ^1.0.4
   dio: ^3.0.10
+  image_picker: ^0.6.7+7
 
 dev_dependencies:
   flutter_test:

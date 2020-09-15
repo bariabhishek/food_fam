@@ -1,18 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_fam/model/order_details.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 class OrderDetailsPic extends StatefulWidget {
   String type;
-  OrderDetailsPic(@required this.type);
+ var order;
+  OrderDetailsPic(@required this.type, this.order);
 
   @override
   _OrderDetailsPicState createState() => _OrderDetailsPicState();
 }
 
 class _OrderDetailsPicState extends State<OrderDetailsPic> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    final data = widget.order;
+   // dataUncode(widget)
+   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,10 +62,10 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
               color: Colors.black,fontSize: AppFontSize.s18,
           ),),
 
-            ListView.builder(itemCount: 2,
+            ListView.builder(itemCount: widget.order.length ,
             shrinkWrap: true,
             itemBuilder: (context,int index){
-              return orderList();
+              return orderList(widget.order[index].orderName);
             },),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
             Text('Instructions',style: AppTheme.textStyle.lightHeading.copyWith(
@@ -114,10 +125,10 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
     );
   }
 
-  Widget orderList() {
+  Widget orderList(String orderName) {
     return ListTile(
       leading: Image.asset(Assets.veg,height: 16,width: 16,),
-      title: Text('Dish name'),
+      title: Text(orderName),
       subtitle: Text('costomization details'),
       trailing: Text('₹0000'),
     );

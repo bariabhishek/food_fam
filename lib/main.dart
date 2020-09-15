@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:food_fam/screens/login.dart';
 import 'package:food_fam/screens/menu_screen.dart';
+import 'package:food_fam/screens/searchScreen.dart';
 import 'package:food_fam/splashScreen/splashScreen.dart';
 import 'package:food_fam/utils/size_config.dart';
 

@@ -160,6 +160,8 @@ class _MenuScreenState extends State<MenuScreen> {
       ),
     );
   }
+
+
   Future<void> _refresh() async {
     if(_categoryList.isNotEmpty){
       _categoryList.clear();

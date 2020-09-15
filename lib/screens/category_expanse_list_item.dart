@@ -72,7 +72,7 @@ class _CategoryExpanseListItemState extends State<CategoryExpanseListItem> {
               ),
               FlatButton(
                 padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                minWidth: 0,
+               // minWidth: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 color: AppTheme.primaryColor,
@@ -90,7 +90,7 @@ class _CategoryExpanseListItemState extends State<CategoryExpanseListItem> {
               ),
               FlatButton(
                 padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                minWidth: 0,
+               // minWidth: 0,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10))),
                 color: AppTheme.accentColor,
