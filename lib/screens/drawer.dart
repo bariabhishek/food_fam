@@ -4,11 +4,14 @@ import 'package:food_fam/screens/order_details.dart';
 import 'package:food_fam/screens/order_list.dart';
 import 'package:food_fam/screens/profile_screen.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/size_config.dart';
-
+import 'contactus.dart';
+import 'coupon.dart';
 import 'dish_view_page.dart';
+import 'login.dart';
 
 class AllDrawerScreen extends StatefulWidget {
   @override
@@ -135,16 +138,16 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
 
           ListTile(
             onTap: (){
-          //    AppRoutes.goto(context,SettingScreen());
+             AppRoutes.goto(context,CouponScreen());
             },
         //    leading: Icon(Icons.settings,color: Colors.black,),
-            title: Text('Promotion',style: AppTheme.textStyle.lightHeading.copyWith(
+            title: Text('Coupon',style: AppTheme.textStyle.lightHeading.copyWith(
                 fontSize: AppFontSize.s20
             ),),
           ),
           ListTile(
             onTap: (){
-          //    AppRoutes.goto(context, About_Screen());
+              AppRoutes.goto(context, ContactUs());
             },
          //   leading: Container(margin:EdgeInsets.only(left: 2),child: Image.asset(Assets.logo,width: 20,height: 20,)),
             title: Text('Contact Us',style: AppTheme.textStyle.lightHeading.copyWith(
@@ -152,8 +155,48 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
             ),),
         //    trailing: Icon(Icons.arrow_forward_ios,size: 18,),
           ),
+          ListTile(
+            onTap: (){
+
+             _deleteSubCategoryDialog();
+            },
+         //   leading: Container(margin:EdgeInsets.only(left: 2),child: Image.asset(Assets.logo,width: 20,height: 20,)),
+            title: Text('Log Out',style: AppTheme.textStyle.lightHeading.copyWith(
+                fontSize: AppFontSize.s20
+            ),),
+        //    trailing: Icon(Icons.arrow_forward_ios,size: 18,),
+          ),
         ],
       ),
+    );
+
+  }
+  void _deleteSubCategoryDialog() {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Logout'),
+          content: Text('Are you sure want to logout'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+              //  _deleteSubCategoryfromServer(index,id);
+                ShareMananer.logOut(context);
+                AppRoutes.makeFirst(context, LogInScreen());
+              },
+              child: Text("Logout"),
+            ),
+          ],
+        );
+      },
     );
   }
 

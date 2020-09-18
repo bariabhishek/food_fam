@@ -13,6 +13,8 @@ import 'package:food_fam/utils/size_config.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import 'add_coupan_screen.dart';
+
 class CouponScreen extends StatefulWidget {
   @override
   _CouponScreenState createState() => _CouponScreenState();
@@ -93,7 +95,7 @@ class _CouponScreenState extends State<CouponScreen> {
             ),
             InkWell(
               onTap: () {
-                _addCategoryDialog();
+                AppRoutes.goto(context, AddCouponScreen());
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -251,7 +253,7 @@ class _CouponScreenState extends State<CouponScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text('dd/mm/yy',style: AppTheme.textStyle.lightHeading.copyWith(
+                        Text('Expiry Date',style: AppTheme.textStyle.lightHeading.copyWith(
                             color: Colors.black54,fontSize: AppFontSize.s16
                         ),),
                         SizedBox(width: SizeConfig.widthMultiplier*5,),

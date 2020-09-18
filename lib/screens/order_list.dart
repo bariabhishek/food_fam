@@ -75,7 +75,7 @@ class _homeScreenState extends State<OrderListScreen> {
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
         child: ListTile(
           onTap: (){
-            AppRoutes.goto(context, OrderDetailsPic("approverd",list));
+            AppRoutes.goto(context, OrderDetailsPic("approverd",id));
           },
           title: Text(name),
           trailing:  Text(status),

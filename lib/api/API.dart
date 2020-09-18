@@ -31,6 +31,7 @@ class API {
   static String coupanList = BASE_URL+"coupon.php";
   static String coupanAdd = BASE_URL+"addcoupon.php";
   static String coupanDelete= BASE_URL+"deletecoupon.php";
+  static String orderdetail= BASE_URL+"orderdetail.php";
 
 
   static Future<Response> post(String api, Map<String, String> args,String token) {
