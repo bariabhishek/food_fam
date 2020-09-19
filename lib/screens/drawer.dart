@@ -8,6 +8,7 @@ import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/size_config.dart';
 
+import 'coupon.dart';
 import 'dish_view_page.dart';
 
 class AllDrawerScreen extends StatefulWidget {
@@ -135,10 +136,10 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
 
           ListTile(
             onTap: (){
-          //    AppRoutes.goto(context,SettingScreen());
+              AppRoutes.goto(context, CouponScreen());
             },
         //    leading: Icon(Icons.settings,color: Colors.black,),
-            title: Text('Promotion',style: AppTheme.textStyle.lightHeading.copyWith(
+            title: Text('Coupons',style: AppTheme.textStyle.lightHeading.copyWith(
                 fontSize: AppFontSize.s20
             ),),
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_fam/screens/subcategory_view_page.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/size_config.dart';
@@ -56,55 +57,65 @@ class _CategoryExpanseListItemState extends State<CategoryExpanseListItem> {
           title: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              InkWell(
-                onTap: () {
-                  AppRoutes.goto(
-                      context,
-                      CategoryViewScreen(widget.category_name, widget.id,));
-                },
-                child: Container(
-                  width: SizeConfig.heightMultiplier * 26,
-                  child: Text(widget.category_name.toString(),
-                      textAlign: TextAlign.left,
-                      style: AppTheme.textStyle.lightHeading.copyWith(
-                          color: Colors.black, fontSize: AppFontSize.s18)),
-                ),
-              ),
-              FlatButton(
-                padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-               // minWidth: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                color: AppTheme.primaryColor,
-                onPressed: () {
-                  widget.addSubcategory();
-                },
-                child: Tooltip(
-                  message: "Add SubCategory",
-                  child: Icon(
-                    Icons.add,
-                    color: Colors.white,
-                    size: 20,
+              Expanded(
+                flex: 5,
+                child: InkWell(
+                  onTap: () {
+                    AppRoutes.goto(
+                        context,
+                        CategoryViewScreen(widget.category_name, widget.id,));
+                  },
+                  child: Container(
+
+                    child: Text(widget.category_name.toString(),
+                        textAlign: TextAlign.left,
+                        style: AppTheme.textStyle.lightHeading.copyWith(
+                            color: Colors.black, fontSize: AppFontSize.s18)),
                   ),
                 ),
               ),
-              FlatButton(
-                padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-               // minWidth: 0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                color: AppTheme.accentColor,
-                onPressed: () {
-                  AppRoutes.goto(
-                      context,
-                      CategoryViewScreen(widget.category_name, widget.id,));
-                },
-                child: Tooltip(
-                  message: "View category",
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.white,
-                    size: 20,
+              
+
+              Expanded(
+                child: FlatButton(
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
+                 // minWidth: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  color: AppTheme.primaryColor,
+                  onPressed: () {
+                    widget.addSubcategory();
+                  },
+                  child: Tooltip(
+                    message: "Add SubCategory",
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 8,),
+              Expanded(
+                child: FlatButton(
+                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
+                 // minWidth: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  color: AppTheme.accentColor,
+                  onPressed: () {
+                    AppRoutes.goto(
+                        context,
+                        CategoryViewScreen(widget.category_name, widget.id,));
+                  },
+                  child: Tooltip(
+                    message: "View category",
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
               ),
@@ -117,7 +128,11 @@ class _CategoryExpanseListItemState extends State<CategoryExpanseListItem> {
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(widget._subCategoryList[index].name.toString()),
+                      InkWell(child: Text(widget._subCategoryList[index].name.toString()),onTap: (){
+                        AppRoutes.goto(
+                            context,
+                            subCategoryViewScreen(widget._subCategoryList[index].name,widget._subCategoryList[index].id, widget.id,));
+                      },),
                       InkWell(
                         onTap: () {
                           AppRoutes.replace(
@@ -149,18 +164,28 @@ class _CategoryExpanseListItemState extends State<CategoryExpanseListItem> {
                   children: [
                     ListView.builder(
                       itemBuilder: (context, ind) {
-                        return Container(
-                          padding: EdgeInsets.all(16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Text(widget
-                                  ._subCategoryList[index].dish_list[ind].name),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 10,
-                              )
-                            ],
+                        return InkWell(
+                          onTap: (){
+                            AppRoutes.goto(context,
+                            DishViewScreen(
+                            widget.id,
+                            widget._subCategoryList[index].id,
+                              widget
+                                  ._subCategoryList[index].dish_list[ind].id
+                          ));},
+                          child: Container(
+                            padding: EdgeInsets.all(16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(widget
+                                    ._subCategoryList[index].dish_list[ind].name),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 10,
+                                )
+                              ],
+                            ),
                           ),
                         );
                       },

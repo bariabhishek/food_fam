@@ -406,43 +406,52 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Text(itemList[index].name.toString()),
-                    Spacer(),
-                    FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                     // minWidth: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      color: AppTheme.accentColor,
-                      onPressed: () {
-                        AppRoutes.replace(
-                            context,
-                            subCategoryViewScreen(itemList[index].name,itemList[index].id,itemList[index].category_id));
-                      },
-                      child: Tooltip(
-                        message: "View subcategory",
-                        child: Icon(
-                          Icons.search,
-                          color: Colors.white,
-                          size: 20,
+                    Expanded(child: InkWell(onTap: () {
+                      AppRoutes.replace(
+                          context,
+                          subCategoryViewScreen(itemList[index].name,itemList[index].id,itemList[index].category_id));
+                    },child: Text(itemList[index].name.toString()),),flex: 5,),
+
+                    Expanded(
+                      child: FlatButton(
+                        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
+                       // minWidth: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                        color: AppTheme.accentColor,
+                        onPressed: () {
+                          AppRoutes.replace(
+                              context,
+                              subCategoryViewScreen(itemList[index].name,itemList[index].id,itemList[index].category_id));
+                        },
+                        child: Tooltip(
+                          message: "View subcategory",
+                          child: Icon(
+                            Icons.search,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
-                    FlatButton(
-                      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
+                    SizedBox(width: 8,),
+                    Expanded(
+                      child: FlatButton(
+                        padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
                    //   minWidth: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      color: AppTheme.accentColor,
-                      onPressed: () {
-                        _deleteSubCategoryDialog(index,itemList[index].id);
-                           },
-                      child: Tooltip(
-                        message: "Delete subcategory",
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                          size: 20,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10))),
+                        color: AppTheme.accentColor,
+                        onPressed: () {
+                          _deleteSubCategoryDialog(index,itemList[index].id);
+                             },
+                        child: Tooltip(
+                          message: "Delete subcategory",
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
                       ),
                     ),
@@ -451,17 +460,26 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
                 children: [
                   ListView.builder(
                     itemBuilder: (context, ind) {
-                      return Container(
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(itemList[index].dish_list[ind].name),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 10,
-                            )
-                          ],
+                      return InkWell(
+                        onTap: (){
+                          AppRoutes.goto(context, DishViewScreen(
+                              widget.itemId,
+                              itemList[index].id,
+                              itemList[index].dish_list[ind].id
+                          ));
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(itemList[index].dish_list[ind].name),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 10,
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },

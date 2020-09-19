@@ -72,18 +72,33 @@ class _CouponScreenState extends State<CouponScreen> {
                   Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Categories',
+                        'Coupons',
                         style: AppTheme.textStyle.lightHeading.copyWith(
                             fontSize: AppFontSize.s20,
                             color: Colors.black),
                       )),
                   Container(
-                    height: 40,
-                    width: SizeConfig.widthMultiplier * 50,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                        BorderRadius.all(Radius.circular(20)),
-                        border: Border.all(color: Colors.grey, width: 1)),
+                      height: 40,
+                      width: SizeConfig.widthMultiplier * 50,
+                      padding: EdgeInsets.only(left: 8),
+                      decoration: BoxDecoration(
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(20)),
+                          border: Border.all(color: Colors.grey, width: 1)),
+                      child: Center(
+                        child: TextField(
+                          onChanged: onItemChanged,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+                            hintText: " Search Coupon",
+
+                          ),
+                        ),
+                      )
                   ),
                 ],
               ),
@@ -102,7 +117,7 @@ class _CouponScreenState extends State<CouponScreen> {
                 margin: EdgeInsets.only(left: 20),
                 padding: EdgeInsets.all(8),
                 child: Text(
-                  'Add Category',
+                  'Add New Coupon',
                   style: AppTheme.textStyle.lightHeading.copyWith(
                       color: Colors.white, fontSize: AppFontSize.s16),
                 ),
@@ -538,5 +553,8 @@ class _CouponScreenState extends State<CouponScreen> {
         print("Catch Error " + e);
       }
     });
+  }
+
+  void onItemChanged(String value) {
   }
 }

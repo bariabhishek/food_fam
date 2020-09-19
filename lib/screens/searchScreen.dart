@@ -77,17 +77,12 @@ class _foodfamState extends State<SearchScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  GestureDetector(
-                    onTap:(){
-                      AppRoutes.goto(context, CouponScreen());
-                    },
-                    child: Text(
-                      'ORDERS',
-                      style: AppTheme.textStyle.lightHeading.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontSize: AppFontSize.s16),
-                    ),
+                  Text(
+                    'ORDERS',
+                    style: AppTheme.textStyle.lightHeading.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: AppFontSize.s16),
                   ),
                   Container(
                     height: SizeConfig.heightMultiplier * 6,

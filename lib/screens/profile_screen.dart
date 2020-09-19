@@ -319,7 +319,7 @@ class _foodfamState extends State<foodfamProfile> {
     // var body = json.encode(args);
 
     API.post(API.ProfileAPi,args,"").then((response){
-    //  loadProgress();
+
       print(response.statusCode.toString());
       print(response.body.toString());
 

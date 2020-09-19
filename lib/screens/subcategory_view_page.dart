@@ -344,21 +344,24 @@ class _MenuViewScreenState extends State<subCategoryViewScreen> {
                     color: Colors.grey[300],
                   ), borderRadius: BorderRadius.all(Radius.circular(5))),
               child: ListTile(
-                trailing:FlatButton(
-                  padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
-                //  minWidth: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  color: AppTheme.accentColor,
-                  onPressed: () {
-                    _deleteSubCategoryDialog(index,itemList[index].id);
-                  },
-                  child: Tooltip(
-                    message: "Delete Dish",
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                      size: 20,
+                trailing:Container(
+                  width: SizeConfig.widthMultiplier*10,
+                  child: FlatButton(
+                    padding: EdgeInsets.symmetric(vertical: 1, horizontal: 6),
+                  //  minWidth: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    color: AppTheme.accentColor,
+                    onPressed: () {
+                      _deleteSubCategoryDialog(index,itemList[index].id);
+                    },
+                    child: Tooltip(
+                      message: "Delete Dish",
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.white,
+                        size: 20,
+                      ),
                     ),
                   ),
                 ),

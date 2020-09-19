@@ -63,10 +63,13 @@ class _DishEditState extends State<DishViewScreen> {
           style: AppTheme.textStyle.lightHeading.copyWith(color: Colors.white),
         ),
         actions: [
-          IconButton(icon: Icon(Icons.delete), onPressed: (){})
+          IconButton(icon: Icon(Icons.delete), onPressed: (){_deleteDishDialog();})
         ],
       ),
-      body: tempResponse != null
+      body:
+    GestureDetector(
+    onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+      child: tempResponse != null
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -270,6 +273,7 @@ class _DishEditState extends State<DishViewScreen> {
                               _addCategoryDialog();
                             }
 
+
                             //  updateClock(value);
                           });
                         },
@@ -294,7 +298,7 @@ class _DishEditState extends State<DishViewScreen> {
                       new AlwaysStoppedAnimation<Color>(AppTheme.primaryColor),
                 ),
               ),
-            ),
+            )),
       bottomNavigationBar: InkWell(
         child: Container(
           height: SizeConfig.heightMultiplier * 7,
@@ -334,10 +338,8 @@ class _DishEditState extends State<DishViewScreen> {
                       ),
                       leading: IconButton(
                         onPressed: () {
-                          _toppingList.removeAt(index);
-                          setState(() {
+                          _deleteTopping(_toppingList[index].id,index);
 
-                          });
                         }, icon: Icon(Icons.clear,color: Colors.black,),
 
                       ),
@@ -387,17 +389,39 @@ class _DishEditState extends State<DishViewScreen> {
             ),
             FlatButton(
               onPressed: () {
-                _toppingList.add(new ToppingsModel(
-                    "",
-                    "",
-                    topping_name_controller.text.toString(),
-                    "",
-                    topping_price_controller.text.toString(),
-                    ""));
+                Navigator.pop(context);
+                _addTopping(widget.dishId, topping_name_controller.text.toString(), topping_price_controller.text.toString(),);
                 topping_name_controller.text = "";
                 topping_price_controller.text = "";
+
+              },
+              child: Text("Add"),
+            ),
+          ],
+        );
+      },
+    );
+  }  _deleteDishDialog() {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete Dish'),
+          content: Container(
+            child: Text('Are you sure do you want delete Dish'),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+            FlatButton(
+              onPressed: () {
                 Navigator.pop(context);
-                setState(() {});
+                deleteDish();
+
               },
               child: Text("Add"),
             ),
@@ -416,24 +440,23 @@ class _DishEditState extends State<DishViewScreen> {
       args["categoryid"] = widget.categoryId;
       args["subcategoryid"] = widget.subcategoryId;
       args["name"] = _dishName.text;
+      args["dishid"] =widget.dishId;
       args["price"] = _price.text;
       args["description"] = _des.text;
       args["type"] = type;
-      args["isBestSeller"] = isBestSeller.toString();
+      args["bestseller"] = isBestSeller.toString();
       args["isCustomizable"] = isSwitched.toString();
       args["toppings"] = json.encode(_toppingList);
       print(args.toString());
       _dialog();
-      API.post(API.addDish, args, "").then((response) {
+      API.post(API.editDish, args, "").then((response) {
         print(response.body.toString());
 
         if (response.statusCode == 200) {
           final data = json.decode(response.body);
           if (data['success'] == 1) {
             Navigator.of(context).pop(diloagContext);
-            showDisplayAllert(
-                context: context, isSucces: false, message: data['message']);
-            AppRoutes.goto(context, MenuScreen());
+            showDisplayAllert(context: context, isSucces: true, message: data['message']);
           } else {
             Navigator.of(context).pop(diloagContext);
             showDisplayAllert(
@@ -481,7 +504,7 @@ class _DishEditState extends State<DishViewScreen> {
     Map<String, String> args = new Map();
    // args["restaurantid"] = resId;
     args["dishid"] = widget.dishId;
-
+print(args);
     API.post(API.dishmenu, args, "").then((response) {
       print(response.body.toString());
 
@@ -493,22 +516,23 @@ class _DishEditState extends State<DishViewScreen> {
 
           for (int i = 0; i < dish.length; i++) {
 
-             isSwitched=dish[i]['bestseller']== "true"?true:false;
-             isBestSeller=dish[i]['isCustomizable']== "true"?true:false;
+            isBestSeller =dish[i]['bestseller']== "true"?true:false;
+            isSwitched =dish[i]['isCustomizable']== "true"?true:false;
              _dishName.text=dish[i]['name'].toString();
              _price.text=dish[i]['price'].toString();
              _des.text=dish[i]['description'].toString();
              type=dish[i]['type'].toString();
              instId=dish[i]['type'].toString();
-             List toppings = dish[i]["toppings"];
+             if(isSwitched)
+            { List toppings = dish[i]["toppings"];
              for (int k = 0; k < toppings.length; k++) {
                var id = toppings[k]["id"].toString();
                var dishid = toppings[k]["dishid"].toString();
                var name = toppings[k]["name"].toString();
                var price = toppings[k]["price"].toString();
                _toppingList.add(new ToppingsModel(id,dishid,name,"",price,""));
-
              }
+            }
 
              setState(() {
 
@@ -527,71 +551,90 @@ class _DishEditState extends State<DishViewScreen> {
     });
     // print();
   }
-}
-/*
-restaurantid:32
-categoryid:11
-subcategoryid:29
-name:small samosa
-price:30
-description:desjhjhjjjdjd*/
 
-/* SizedBox(
-              height: SizeConfig.heightMultiplier * 2,
-            ),
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppTheme.primaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    width: 100,
-                    height: 70,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.filter,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'Save',
-                          style: AppTheme.textStyle.lightHeading
-                              .copyWith(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: AppTheme.primaryColor,
-                        borderRadius: BorderRadius.all(Radius.circular(50))),
-                    width: 100,
-                    height: 70,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          Icons.delete_forever,
-                          color: Colors.white,
-                        ),
-                        Text(
-                          'Delete',
-                          style: AppTheme.textStyle.lightHeading
-                              .copyWith(color: Colors.white),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.heightMultiplier * 1,
-            ),*/
+  void _deleteTopping(id,index) {
+    Map<String, String> args = new Map();
+    args["restaurantid"] = resId;
+    args["toppingid"] =id.toString();
+    _dialog();
+    API.post(API.deleteTopping, args, "").then((response) {
+      print(response.body.toString());
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == 1) {
+          Navigator.of(context).pop(diloagContext);
+          showDisplayAllert(context: context, isSucces: true, message: data['message']);
+          _toppingList.removeAt(index);
+          setState(() {
+
+          });
+        }
+        else{
+          Navigator.of(context).pop(diloagContext);
+          Future.delayed(Duration(seconds: 1), () {
+            Navigator.pop(context);
+          });
+          //showDisplayAllert(context: context, isSucces: false, message: data['message']);
+
+        }
+      }
+    });
+  }
+
+  void _addTopping(String dishId, String name, String price) {
+    if(price.isNotEmpty && name.isNotEmpty){
+    Map<String, String> args = new Map();
+    args["restaurantid"] = resId;
+    args["dishid"] =dishId;
+    args["name"] =name;
+    args["price"] =price;
+    _dialog();
+    API.post(API.addTopping, args, "").then((response) {
+      print(response.body.toString());
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == 1) {
+          Navigator.of(context).pop(diloagContext);
+          showDisplayAllert(context: context, isSucces: true, message: data['message']);
+          _toppingList.add(new ToppingsModel("", "", name, "", price, ""));
+          setState(() {});
+        }
+        else{
+          Navigator.of(context).pop(diloagContext);
+          Future.delayed(Duration(seconds: 1), () {
+            Navigator.pop(context);
+          });
+          //showDisplayAllert(context: context, isSucces: false, message: data['message']);
+
+        }
+      }
+    });
+  }
+  }
+
+  void deleteDish() {
+
+    Map<String, String> args = new Map();
+    args["restaurantid"] = resId;
+    args["dishid"] =widget.dishId;
+    _dialog();
+    API.post(API.deleteDish, args, "").then((response) {
+      print(response.body.toString());
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == 1) {
+          Navigator.of(context).pop(diloagContext);
+          showDisplayAllert(context: context, isSucces: true, message: data['message']);
+          AppRoutes.replace(context, MenuScreen());
+
+        }
+        else{
+          Navigator.of(context).pop(diloagContext);
+
+          showDisplayAllert(context: context, isSucces: false, message: data['message']);
+
+        }
+      }
+    });
+  }
+}

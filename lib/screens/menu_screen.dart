@@ -26,6 +26,7 @@ class _MenuScreenState extends State<MenuScreen> {
   Dialog diloagContext;
 
   List<CategoryModel> _categoryList = List();
+  List<CategoryModel> _searchCategory = List();
 
   @override
   void initState() {
@@ -81,10 +82,25 @@ class _MenuScreenState extends State<MenuScreen> {
                       Container(
                         height: 40,
                         width: SizeConfig.widthMultiplier * 50,
+                        padding: EdgeInsets.only(left: 8),
                         decoration: BoxDecoration(
                             borderRadius:
                             BorderRadius.all(Radius.circular(20)),
                             border: Border.all(color: Colors.grey, width: 1)),
+                        child: Center(
+                          child: TextField(
+                            onChanged: onItemChanged,
+                            decoration: InputDecoration(
+                                border: InputBorder.none,
+                                focusedBorder: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                errorBorder: InputBorder.none,
+                                disabledBorder: InputBorder.none,
+                                hintText: " Type Category",
+
+                            ),
+                          ),
+                        )
                       ),
                     ],
                   ),
@@ -112,7 +128,7 @@ class _MenuScreenState extends State<MenuScreen> {
                 SizedBox(
                   height: SizeConfig.heightMultiplier * 2,
                 ),
-                _categoryList.isEmpty && !haveData
+                _searchCategory.isEmpty && !haveData
                     ? Container(
                   height: SizeConfig.heightMultiplier * 20,
                   child: Center(
@@ -125,20 +141,20 @@ class _MenuScreenState extends State<MenuScreen> {
                     child: ListView.builder(
                       itemBuilder: (context, index) {
                         return CategoryExpanseListItem(
-                            _categoryList[index].id,
-                            _categoryList[index].restaurantid,
-                            _categoryList[index].name,
-                            _categoryList[index].createat,
-                            _categoryList[index].blockstatus,
-                            _categoryList[index].subcategory_list,
+                            _searchCategory[index].id,
+                            _searchCategory[index].restaurantid,
+                            _searchCategory[index].name,
+                            _searchCategory[index].createat,
+                            _searchCategory[index].blockstatus,
+                            _searchCategory[index].subcategory_list,
                             addSubcategory: () {
-                              _addSubCategoryDialog( _categoryList[index].id,);
+                              _addSubCategoryDialog( _searchCategory[index].id,);
                             }, addDish: () {
                           print("ok");
                         });
                       },
                       physics: AlwaysScrollableScrollPhysics(),
-                      itemCount: _categoryList.length,
+                      itemCount: _searchCategory.length,
                     ),
                   ),
                 ),
@@ -168,6 +184,16 @@ class _MenuScreenState extends State<MenuScreen> {
       fetchData(resId);
     }
   }
+
+
+  onItemChanged(String value) {
+    setState(() {
+      _searchCategory = _categoryList
+          .where((string) => string.name.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
+  }
+
   _addCategoryDialog() {
     showDialog<bool>(
       context: context,
@@ -277,6 +303,8 @@ class _MenuScreenState extends State<MenuScreen> {
 
             _categoryList.add(new CategoryModel(id, restaurantid, name,
                 createat, blockstatus, _subCategoryList));
+            _searchCategory.add(new CategoryModel(id, restaurantid, name,
+                createat, blockstatus, _subCategoryList));
           }
 
           setState(() {});
@@ -291,6 +319,9 @@ class _MenuScreenState extends State<MenuScreen> {
     });
     // print();
   }
+
+
+
 
   void _addCategoryToServer() {
     Map<String, String> args = new Map();
