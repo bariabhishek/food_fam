@@ -141,7 +141,9 @@ class _foodfamState extends State<SearchScreen> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: pendinglist.length,
+
                   itemBuilder: (context, int index) {
+                    print('lenth'+pendinglist.length.toString());
                     return UiSearch(index, context,pendinglist[index].name,pendinglist[index].mobile,pendinglist[index]
                         .status,orderDetails,pendinglist[index].id);
                   },
@@ -171,8 +173,8 @@ class _foodfamState extends State<SearchScreen> {
                   shrinkWrap: true,
                   itemCount: aprovedlist.length,
                   itemBuilder: (context, int index) {
-                    return suggested(context,aprovedlist[index].name,aprovedlist[index].mobile
-                        ,aprovedlist[index].status,aprovedlist[index].order,aprovedlist[index].id);
+                    return suggested(index,context,aprovedlist[index].name,aprovedlist[index].mobile
+                        ,aprovedlist[index].status,aprovedlist[index].orderDetails,aprovedlist[index].id);
 
                   },
                 ),
@@ -228,16 +230,29 @@ class _foodfamState extends State<SearchScreen> {
             String date = dlist[i]["date"].toString();
             String instruction = dlist[i]["instruction"].toString();
             List order = dlist[i]['order'];
+            List<OrderDetails> orderDetails =new List();
+            for(var data in order ){
+                  var order_id=data['id'].toString();
+                      var orderName=data['name'].toString();
+      var orderPrice=data['price'].toString();
+      var orderQuantity=data['quantity'].toString();
+      var orderAttributes=data['attributes'].toString();
+      var orderConditions=data['conditions'].toString();
+      var  orderassociatedModel=data['associatedModel'].toString();
+
+      orderDetails.add(new OrderDetails(order_id, orderName, orderPrice, orderQuantity, orderAttributes, orderConditions, orderassociatedModel));
+
+            }
 
           //  print('getting data'+name.toString());
 
-            aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
-        /*    if(status.toString()=="A"){
+          //  aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
+            if(status.toString()=="A"){
               print('getting data'+name.toString());
-              aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
+              aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,orderDetails));
             }else if(status.toString()=="P"){
-              pendinglist.add(new PendingOrders_(id,name,mobile,status,reason,date,instruction,order));
-            }*/
+              pendinglist.add(new PendingOrders_(id,name,mobile,status,reason,date,instruction,orderDetails));
+            }
 
 setState(() {
 
@@ -245,9 +260,7 @@ setState(() {
           }
 
 
-            setState(() {
 
-            });
 /*
           Future.delayed(Duration(seconds: 2), () {
 
@@ -265,15 +278,16 @@ setState(() {
   }
 
   Widget UiSearch(int index, BuildContext context,String name , String mobile, String status, List order, String id) {
+    print('working');
     if(status=='P'){
-      print('working');
+
       return Card(
         child: Container(
           width: SizeConfig.widthMultiplier * 100,
           padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
           child: ListTile(
             onTap: (){
-              AppRoutes.goto(context, OrderDetailsPic("pendeing",id));
+              AppRoutes.goto(context, OrderDetailsPic("Pending",id,name,mobile,status,pendinglist[index].orderDetails));
             },
             title: Text(name),
             trailing:  Text(status),
@@ -292,12 +306,12 @@ setState(() {
 
   }
 
-  Widget suggested(BuildContext context, String name, String mobile, String status, List order, String id) {
-      print(status.toString()+"fbbfdbdfbdfbdf");
+  Widget suggested(int index,BuildContext context, String name, String mobile, String status, List order, String id) {
+   //   print(status.toString()+"fbbfdbdfbdfbdf");
     if(status=='A'){
       return InkWell(
         onTap: (){
-          AppRoutes.goto(context, OrderDetailsPic("approverd",id));
+          AppRoutes.goto(context, OrderDetailsPic("approverd",id,name,mobile,status,aprovedlist[index].orderDetails));
         },
         child: Card(
           child: Container(

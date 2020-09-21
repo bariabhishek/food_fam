@@ -3,6 +3,7 @@ import 'package:food_fam/screens/menu_screen.dart';
 import 'package:food_fam/screens/order_details.dart';
 import 'package:food_fam/screens/order_list.dart';
 import 'package:food_fam/screens/profile_screen.dart';
+import 'package:food_fam/screens/report.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
@@ -100,7 +101,7 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
-
+                            AppRoutes.goto(context, ReportScreen());
                           },
                           child: Container(
 
@@ -112,7 +113,7 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
                         SizedBox(
                           height: SizeConfig.heightMultiplier * 2,
                         ),
-                        GestureDetector(
+                       /* GestureDetector(
                           onTap: (){
 
                           },
@@ -122,7 +123,7 @@ class _AllDrawerScreenState extends State<AllDrawerScreen> {
                                 fontSize: AppFontSize.s20
                             ),),
                           ),
-                        ),
+                        ),*/
                         SizedBox(
                           height: SizeConfig.heightMultiplier * 2,
                         ),

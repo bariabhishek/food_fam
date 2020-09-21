@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:food_fam/api/API.dart';
+import 'package:food_fam/model/aproved_order_list.dart';
 import 'package:food_fam/model/orderList.dart';
 import 'package:food_fam/screens/drawer.dart';
 import 'package:food_fam/screens/order_details.dart';
@@ -21,6 +22,7 @@ class _homeScreenState extends State<OrderListScreen> {
   String Rname='';
   String id='';
   List<OrderList> list = new List();
+  List<AproverdOrders> list2 = new List();
 
   @override
   void initState() {
@@ -75,7 +77,7 @@ class _homeScreenState extends State<OrderListScreen> {
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
         child: ListTile(
           onTap: (){
-            AppRoutes.goto(context, OrderDetailsPic("approverd",id));
+          //  AppRoutes.goto(context, OrderDetailsPic("approverd",list2[index],id,name,mobile,status,orderDetails));
           },
           title: Text(name),
           trailing:  Text(status),

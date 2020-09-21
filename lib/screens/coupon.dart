@@ -55,7 +55,7 @@ class _CouponScreenState extends State<CouponScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Coupan'),
+        title: Text('Coupon'),
         centerTitle: true,
         backgroundColor: AppTheme.primaryColor,
       ),
@@ -74,7 +74,7 @@ class _CouponScreenState extends State<CouponScreen> {
                   Container(
                       alignment: Alignment.center,
                       child: Text(
-                        'Categories',
+                        'Coupon',
                         style: AppTheme.textStyle.lightHeading.copyWith(
                             fontSize: AppFontSize.s20,
                             color: Colors.black),
@@ -104,7 +104,7 @@ class _CouponScreenState extends State<CouponScreen> {
                 margin: EdgeInsets.only(left: 20),
                 padding: EdgeInsets.all(8),
                 child: Text(
-                  'Add Category',
+                  'Add Coupon',
                   style: AppTheme.textStyle.lightHeading.copyWith(
                       color: Colors.white, fontSize: AppFontSize.s16),
                 ),

@@ -1,7 +1,13 @@
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:food_fam/api/API.dart';
 import 'package:food_fam/theme/theme.dart';
+import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
+import 'package:food_fam/utils/app_routes.dart';
+import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
 
 
@@ -11,6 +17,23 @@ class ContactUs extends StatefulWidget {
 }
 
 class _ContactUsState extends State<ContactUs> {
+
+  String email='';
+  String mobile='';
+  String address='';
+  var diloagContext;
+
+
+    @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      this. contactus();
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -78,7 +101,7 @@ class _ContactUsState extends State<ContactUs> {
                         onTap: (){
                          // launchURL();
                         },
-                        child: Text('8005615976',style: AppTheme.textStyle.lightHeading.copyWith(color: Colors.blue,
+                        child: Text(mobile,style: AppTheme.textStyle.lightHeading.copyWith(color: Colors.blue,
                         fontSize: AppFontSize.s18),)),
                   ],
                 ),
@@ -97,7 +120,25 @@ class _ContactUsState extends State<ContactUs> {
                 },
                 child: Container(
                   margin: EdgeInsets.only(bottom: SizeConfig.heightMultiplier*5),
-                  child: Text('foodfam@gmail.com',style: AppTheme.textStyle.lightHeading.copyWith(color: Colors.blue),),
+                  child: Text(email,style: AppTheme.textStyle.lightHeading.copyWith(color: Colors.blue),),
+                ),
+              ),
+
+              Container(
+
+                child: Text('Address',
+                  textAlign: TextAlign.center,
+                  style: AppTheme.textStyle.heading1.copyWith(
+                      fontWeight: FontWeight.bold,fontSize: AppFontSize.s17,color: Colors.black
+                  ),),
+              ),
+              GestureDetector(
+                onTap: (){
+                  // sendEmail();
+                },
+                child: Container(
+                  margin: EdgeInsets.only(bottom: SizeConfig.heightMultiplier*5),
+                  child: Text(address,style: AppTheme.textStyle.lightHeading.copyWith(color: Colors.blue),),
                 ),
               ),
             ],
@@ -106,7 +147,77 @@ class _ContactUsState extends State<ContactUs> {
         ],),
       ),
     );
+
   }
+    contactus()
+    {
+      _dialog();
+
+      Map<String, String> args = new Map();
+
+      API.post(API.contactus, args, "").then((response) {
+
+        print(response.statusCode.toString());
+        print(response.body.toString());
+
+        if (response.statusCode == 200) {
+          final data = json.decode(response.body);
+
+          // ShareMananer.setDetails(data['token'], true);
+          print(data['success']);
+
+          if (data['success'] == 1) {
+            String id = data['detail']['id'].toString();
+             address = data['detail']['address'].toString();
+             email = data['detail']['email'].toString();
+             mobile = data['detail']['mobile'].toString();
+            String facebooklink = data['detail']['facebooklink'].toString();
+
+            Navigator.of(context).pop(diloagContext);
+            setState(() {
+
+            });
+            print(id);
+            Future.delayed(Duration(seconds: 1), () {
+              //  AppRoutes.makeFirst(context, SearchScreen());
+            });
+          } else {
+            showDisplayAllert(
+                context: context, isSucces: false, message: data['message']);
+            Navigator.of(context).pop(diloagContext);
+          }
+        } else {
+          showDisplayAllert(
+              context: context, isSucces: false, message: "Server error");
+          Navigator.of(context).pop(diloagContext);
+        }
+      });
+    }
+
+    _dialog(){
+      showDialog(
+          context: this.context,
+          barrierDismissible: true,
+          builder: (context) {
+            return Dialog(
+              child: Container(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: <Widget>[
+                    Container(
+                      child: CircularProgressIndicator(
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            AppTheme.primaryColor),
+                      ),
+                    ),
+                    SizedBox(width: SizeConfig.widthMultiplier*2,),
+                    Text('Please Wait...', style: TextStyle()),
+                  ],
+                ),
+              ),
+            );
+          });
+    }
 /*
   sendEmail() async {
     print('click');
