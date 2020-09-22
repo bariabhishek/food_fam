@@ -149,7 +149,6 @@ class _LogInScreenState extends State<LogInScreen> {
   }
 
   login() async {
-
 if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toString().isNotEmpty)
 {
   loadProgress();
@@ -196,13 +195,6 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
   showDisplayAllert(context: context,isSucces: false,message: "Please fill inputs");
 }
   }
-
-  loadProgress() {
-    isLoading = !isLoading;
-    setState(() {});
-
-  }
-
   _dialog(){
     if(isLoading){
       showDialog(
@@ -229,6 +221,14 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
           });
     }
   }
+
+  loadProgress() {
+    isLoading = !isLoading;
+    setState(() {});
+
+  }
+
+
 }
 
 /*child: ,*/

@@ -21,6 +21,13 @@ class _foodfamState extends State<foodfamProfile> {
   String ownermobile='';
   String logo='';
   String landmark='';
+  String dis='';
+  var diloagContext;
+
+  var mobile = TextEditingController();
+  var mail = TextEditingController();
+  var address = TextEditingController();
+  var discription = TextEditingController();
 //  String Rname='';
 
   @override
@@ -101,7 +108,8 @@ class _foodfamState extends State<foodfamProfile> {
                     color: AppTheme.primaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(2))),
                 padding: EdgeInsets.all(12),
-                child: Row(
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       "Owner/Contact Person",
@@ -110,8 +118,13 @@ class _foodfamState extends State<foodfamProfile> {
                           color: Colors.white,
                           fontSize: AppFontSize.s18),
                     ),
-                    SizedBox(width: 10,),
 
+                    GestureDetector(
+                        onTap: (){
+
+
+                        },
+                        child: Icon(Icons.edit,color: Colors.white,))
                   ],
                 ),
               ),
@@ -136,6 +149,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 7,
                     child: TextField(
+                      controller: mobile,
                       minLines: 10,
                       maxLines: 15,
                       autocorrect: false,
@@ -178,6 +192,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 7,
                     child: TextField(
+                      controller: mail,
                       minLines: 10,
                       maxLines: 15,
                       autocorrect: false,
@@ -219,6 +234,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 13,
                     child: TextField(
+                      controller: address,
                       minLines: 10,
                       maxLines: 15,
                       autocorrect: false,
@@ -260,6 +276,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 20,
                     child: TextField(
+                      controller: discription,
                       minLines: 10,
                       maxLines: 15,
                       autocorrect: false,
@@ -284,17 +301,29 @@ class _foodfamState extends State<foodfamProfile> {
             SizedBox(
               height: SizeConfig.heightMultiplier * 2,
             ),
-            Container(
-              margin: EdgeInsets.only(bottom: 10),
-                padding: EdgeInsets.only(
-                  right: 230,
-                ),
-                child: Text(
-                  "Change Password",
-                  style: TextStyle(),
-                ))
+
           ],
         ),
+      ),
+      bottomNavigationBar: InkWell(
+        child: Container(
+          height: SizeConfig.heightMultiplier * 7,
+          color: AppTheme.primaryColor,
+          child: Center(
+              child: Text('Update Profile',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 18))),
+        ),
+        onTap: () {
+          _updateProfile(
+            mobile.text,
+            mail.text,
+            address.text,
+            discription.text
+          );
+        },
       ),
     );
   }
@@ -314,10 +343,6 @@ class _foodfamState extends State<foodfamProfile> {
     Map<String, String> args = new Map();
     args["restaurantid"]=id;
 
-
-
-    // var body = json.encode(args);
-
     API.post(API.ProfileAPi,args,"").then((response){
 
       print(response.statusCode.toString());
@@ -335,16 +360,16 @@ class _foodfamState extends State<foodfamProfile> {
           String restaurantid = data['restaurantid'].toString();
           Rname = data['Rname'].toString();
           String ownername = data['ownername'].toString();
-          ownermobile = data['ownermobile'].toString();
+          mobile.text = data['ownermobile'].toString();
           logo = data['logo'].toString();
-          landmark = data['landmark'].toString();
+          address.text = data['landmark'].toString();
+          discription.text = data['aboutus'].toString();
+          mail.text = data['Email']??"NA";
           print("Restorent name"+Rname.toString());
-      //    ShareMananer.setDetails(id,true,restaurantid,Rname,ownermobile,ownername );
 
-          Future.delayed(Duration(seconds: 2), () {
+       setState(() {
 
-            //AppRoutes.makeFirst(context, OrderListScreen());
-          });
+       });
         }else{
           showDisplayAllert(context: context,isSucces: false,message: data['message']);
         }
@@ -353,10 +378,82 @@ class _foodfamState extends State<foodfamProfile> {
       else{
         showDisplayAllert(context: context,isSucces: false,message: "Server error");
       }
-      setState(() {
 
-      });
+    });
+  }
 
+  _dialog(){
+    showDialog(
+        context: this.context,
+        barrierDismissible: true,
+        builder: (context) {
+          return Dialog(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    child: CircularProgressIndicator(
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          AppTheme.primaryColor),
+                    ),
+                  ),
+                  SizedBox(width: SizeConfig.widthMultiplier*2,),
+                  Text('Please Wait...', style: TextStyle()),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  report() {
+
+  }
+
+  void _updateProfile(
+      String mobile,
+      String mail,
+      String address,
+      String discription) {
+
+    _dialog();
+
+    Map<String, String> args = new Map();
+    args["retaurantid"]=id.toString();
+    args["ownermobile"]=mobile.toString();
+    args["email"]=mail.toString();
+    args["landmark"]=address.toString();
+    args["aboutus"]=discription.toString();
+
+    API.post(API.editprofile, args, "").then((response) {
+
+      print(response.statusCode.toString());
+      print(response.body.toString());
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+
+        if (data['success'] == 1) {
+
+          Navigator.of(context).pop(diloagContext);
+          Future.delayed(Duration(seconds: 1), () {
+            showDisplayAllert(
+                context: context, isSucces: true, message: data['message']);
+            // AppRoutes.makeFirst(context, SearchScreen());
+          });
+        } else {
+          Navigator.of(context).pop(diloagContext);
+          showDisplayAllert(
+              context: context, isSucces: false, message: data['message']);
+
+        }
+      } else {
+        Navigator.of(context).pop(diloagContext);
+        showDisplayAllert(
+            context: context, isSucces: false, message: "Server error");
+
+      }
     });
   }
 }

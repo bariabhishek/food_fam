@@ -42,7 +42,7 @@ class _foodfamState extends State<SearchScreen> {
       print(Rname);
 
       ///////////peding data///////////
-      orderListPending();
+   //   orderListPending();
 
       /////////////aproved data//////////////
 
@@ -136,9 +136,11 @@ class _foodfamState extends State<SearchScreen> {
                 child: ListView.builder(
                   shrinkWrap: true,
                   itemCount: pendinglist.length,
+
                   itemBuilder: (context, int index) {
+                    print('lenth'+pendinglist.length.toString());
                     return UiSearch(index, context,pendinglist[index].name,pendinglist[index].mobile,pendinglist[index]
-                        .status,orderDetails);
+                        .status,orderDetails,pendinglist[index].id);
                   },
                 ),
               ),
@@ -166,8 +168,8 @@ class _foodfamState extends State<SearchScreen> {
                   shrinkWrap: true,
                   itemCount: aprovedlist.length,
                   itemBuilder: (context, int index) {
-                    return suggested(context,aprovedlist[index].name,aprovedlist[index].mobile
-                        ,aprovedlist[index].status,aprovedlist[index].order);
+                    return suggested(index,context,aprovedlist[index].name,aprovedlist[index].mobile
+                        ,aprovedlist[index].status,aprovedlist[index].orderDetails,aprovedlist[index].id);
 
                   },
                 ),
@@ -223,16 +225,29 @@ class _foodfamState extends State<SearchScreen> {
             String date = dlist[i]["date"].toString();
             String instruction = dlist[i]["instruction"].toString();
             List order = dlist[i]['order'];
+            List<OrderDetails> orderDetails =new List();
+            for(var data in order ){
+                  var order_id=data['id'].toString();
+                      var orderName=data['name'].toString();
+      var orderPrice=data['price'].toString();
+      var orderQuantity=data['quantity'].toString();
+      var orderAttributes=data['attributes'].toString();
+      var orderConditions=data['conditions'].toString();
+      var  orderassociatedModel=data['associatedModel'].toString();
+
+      orderDetails.add(new OrderDetails(order_id, orderName, orderPrice, orderQuantity, orderAttributes, orderConditions, orderassociatedModel));
+
+            }
 
           //  print('getting data'+name.toString());
 
-            aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
-        /*    if(status.toString()=="A"){
+          //  aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
+            if(status.toString()=="A"){
               print('getting data'+name.toString());
-              aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
+              aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,orderDetails));
             }else if(status.toString()=="P"){
-              pendinglist.add(new PendingOrders_(id,name,mobile,status,reason,date,instruction,order));
-            }*/
+              pendinglist.add(new PendingOrders_(id,name,mobile,status,reason,date,instruction,orderDetails));
+            }
 
 setState(() {
 
@@ -240,9 +255,7 @@ setState(() {
           }
 
 
-            setState(() {
 
-            });
 /*
           Future.delayed(Duration(seconds: 2), () {
 
@@ -258,99 +271,18 @@ setState(() {
       }
     });
   }
-  orderListPending(){
-    print('pending data');
-    // loadProgress();
-    Map<String, String> args = new Map();
-    args["restaurantid"]=id;
-    //  var body = json.encode(args);
 
-    API.post(API.OrderList, args,'').then((response){
-//      loadProgress();
-      print(response.statusCode.toString());
-      print(response.body.toString());
-      final data = json.decode(response.body);
-      if(response.statusCode==200)
-      {
-        print(data['success']);
-        if(data['success']==1){
-          tempResponse="1";
-          List dlist = data["detail"];
-          if (dlist.isEmpty) {
-            haveData = false;
-          }
-          print("ffff"+dlist.length.toString());
-
-          for(int i=0;i<dlist.length;i++)
-          {
-            String id = dlist[i]["id"].toString();
-            String name = dlist[i]["name"].toString();
-            String mobile = dlist[i]["mobile"].toString();
-            String status = dlist[i]["status"].toString();
-            String reason = dlist[i]["reason"].toString();
-            String date = dlist[i]["date"].toString();
-            String instruction = dlist[i]["instruction"].toString();
-
-            List order = dlist[i]['order'];
-
-            for(int j = 0 ; j < order.length ; j++){
-              String orderId = order[j]['id'].toString();
-              String orderName = order[j]['name'].toString();
-              String orderPrice = order[j]['price'].toString();
-              String orderQuantity = order[j]['quantity'].toString();
-              String orderAttributes = order[j]['attributes'].toString();
-              String orderConditions = order[j]['conditions'].toString();
-              String orderassociatedModel = order[j]['associatedModel'].toString();
-
-              orderDetails.add(new OrderDetails(orderId,orderName,orderPrice,orderQuantity,orderAttributes,
-              orderConditions,orderassociatedModel));
-
-            }
-
-            //  print('getting data'+name.toString());
-
-            pendinglist.add(new PendingOrders_(id,name,mobile,status,reason,date,instruction,order));
-            /*    if(status.toString()=="A"){
-              print('getting data'+name.toString());
-              aprovedlist.add(new AproverdOrders(id,name,mobile,status,reason,date,instruction,order));
-            }else if(status.toString()=="P"){
-              pendinglist.add(new PendingOrders_(id,name,mobile,status,reason,date,instruction,order));
-            }*/
-
-            setState(() {
-
-            });
-          }
-
-
-          setState(() {
-
-          });
-/*
-          Future.delayed(Duration(seconds: 2), () {
-
-            //AppRoutes.makeFirst(context, OrderListScreen());
-          });*/
-        }else{
-          showDisplayAllert(context: context,isSucces: false,message: data['message']);
-        }
-
-      }
-      else{
-        showDisplayAllert(context: context,isSucces: false,message: "Server error");
-      }
-    });
-  }
-  Widget UiSearch(int index, BuildContext context,String name , String mobile, String status, List order) {
+  Widget UiSearch(int index, BuildContext context,String name , String mobile, String status, List order, String id) {
+    print('working');
     if(status=='P'){
-      print('working');
+
       return Card(
         child: Container(
           width: SizeConfig.widthMultiplier * 100,
           padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
           child: ListTile(
             onTap: (){
-              AppRoutes.goto(context, OrderDetailsPic("pendeing",orderDetails));
+              AppRoutes.goto(context, OrderDetailsPic("Pending",id,name,mobile,status,pendinglist[index].orderDetails));
             },
             title: Text(name),
             trailing:  Text(status),
@@ -369,12 +301,12 @@ setState(() {
 
   }
 
-  Widget suggested(BuildContext context, String name, String mobile, String status, List order) {
-      print(status.toString()+"fbbfdbdfbdfbdf");
+  Widget suggested(int index,BuildContext context, String name, String mobile, String status, List order, String id) {
+   //   print(status.toString()+"fbbfdbdfbdfbdf");
     if(status=='A'){
       return InkWell(
         onTap: (){
-          AppRoutes.goto(context, OrderDetailsPic("approverd",order));
+          AppRoutes.goto(context, OrderDetailsPic("approverd",id,name,mobile,status,aprovedlist[index].orderDetails));
         },
         child: Card(
           child: Container(

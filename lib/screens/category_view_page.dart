@@ -179,7 +179,6 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
         builder: (context) {
           return diloagContext;
         });
-
   }
 
   void _deleteCategoryfromServer() {
@@ -197,7 +196,6 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
             Navigator.pop(context);
           });
          // showDisplayAllert(context: context, isSucces: true, message: data['message']);
-
       }
         else{
           Navigator.of(context).pop(diloagContext);
@@ -205,7 +203,6 @@ class _MenuViewScreenState extends State<CategoryViewScreen> {
             Navigator.pop(context);
           });
           //showDisplayAllert(context: context, isSucces: false, message: data['message']);
-
         }
     }
     });
