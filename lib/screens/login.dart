@@ -26,8 +26,7 @@ class _LogInScreenState extends State<LogInScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _email_controller.text="FOODFAM0006";
-    _pass_controller.text="Admin@1";
+
   }
   @override
   Widget build(BuildContext context) {
@@ -183,12 +182,20 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
             AppRoutes.makeFirst(context, SearchScreen());
           });
         } else {
-          showDisplayAllert(
-              context: context, isSucces: false, message: data['message']);
+          AppRoutes.dismiss(context);
+          Future.delayed(Duration(milliseconds: 200), () {
+            showDisplayAllert(
+                context: context, isSucces: false, message: data['message']);
+
+          });
+
+
         }
       } else {
         showDisplayAllert(
             context: context, isSucces: false, message: "Server error");
+
+
       }
     });
   }else{

@@ -282,7 +282,7 @@ setState(() {
           padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
           child: ListTile(
             onTap: (){
-              AppRoutes.goto(context, OrderDetailsPic("Pending",id,name,mobile,status,pendinglist[index].orderDetails));
+              AppRoutes.goto(context, OrderDetailsPic("pending",id,name,mobile,status,pendinglist[index].orderDetails));
             },
             title: Text(name),
             trailing:  Text(status),

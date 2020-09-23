@@ -36,6 +36,9 @@ class API {
   static String updateorder= BASE_URL+"updateorder.php";
   static String report= BASE_URL+"report.php";
   static String editprofile= BASE_URL+"editprofile.php";
+  static String deleteTopping = BASE_URL+"deletetopping.php";
+  static String addTopping = BASE_URL+"addtopping.php";
+  static String editDish = BASE_URL+"editdishes.php";
 
 
   static Future<Response> post(String api, Map<String, String> args,String token) {

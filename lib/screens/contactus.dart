@@ -39,6 +39,8 @@ class _ContactUsState extends State<ContactUs> {
     return SafeArea(
       top: true,
       child: Scaffold(
+        appBar: AppBar(title: Text("Contact Us"),
+        backgroundColor: AppTheme.primaryColor,elevation: 0,),
         body: Stack(children: <Widget>[
           Column(
             children: <Widget>[

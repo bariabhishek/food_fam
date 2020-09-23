@@ -126,12 +126,13 @@ class _CouponScreenState extends State<CouponScreen> {
             SizedBox(
               height: SizeConfig.heightMultiplier * 2,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-                itemCount: list.length,
-                itemBuilder: (context,int index){
-                  return couponUi(index,list[index].name,list[index].id);
-                }),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (context,int index){
+                    return couponUi(index,list[index].name,list[index].id);
+                  }),
+            ),
           ],
         ),
       ),

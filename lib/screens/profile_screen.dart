@@ -48,10 +48,7 @@ class _foodfamState extends State<foodfamProfile> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: AppTheme.primaryColor,
-        leading: Icon(
-          Icons.arrow_back,
-          color: Colors.white,
-        ),
+
         title: Text(
           "PROFILE",
         

@@ -88,7 +88,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
                     color: Colors.white
                 ),),
               ],),
-              Text(widget.status,style: AppTheme.textStyle.lightHeading.copyWith(
+              Text("SN./"+widget.id,style: AppTheme.textStyle.lightHeading.copyWith(
                   color: Colors.white
               ),),
             ],),
@@ -123,7 +123,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
               ],
             ),
             SizedBox(height: SizeConfig.heightMultiplier*4,),
-            widget.type=="pendeing"?Container(
+            widget.type=="pending"?Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black)
               ),
