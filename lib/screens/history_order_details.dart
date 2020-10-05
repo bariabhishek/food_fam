@@ -13,7 +13,7 @@ import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
 
-class OrderDetailsPic extends StatefulWidget {
+class HistoryOrderDetails extends StatefulWidget {
   String type;
   AproverdOrders data;
   String id;
@@ -21,15 +21,15 @@ class OrderDetailsPic extends StatefulWidget {
   String mobile;
   String status;
   List<OrderDetails> orderDetails;
-  OrderDetailsPic(@required this.type,  this.id,
+  HistoryOrderDetails(@required this.type,  this.id,
       this.name,this.mobile,this.status,this.orderDetails);
 
 
   @override
-  _OrderDetailsPicState createState() => _OrderDetailsPicState();
+  _HistoryOrderDetails createState() => _HistoryOrderDetails();
 }
 
-class _OrderDetailsPicState extends State<OrderDetailsPic> {
+class _HistoryOrderDetails extends State<HistoryOrderDetails> {
 
   var _reason_controller = TextEditingController();
   var diloagContext;
@@ -49,7 +49,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
 
 
     widget.orderDetails.forEach((element) {
-     int topingAmount=0;
+      int topingAmount=0;
       grandTotel=grandTotel+ int.parse(element.orderPrice);
 
       element.topingMainList.forEach((elementToping) {
@@ -70,53 +70,53 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
     });
 
 
-   // dataUncode(widget)
-   }
+    // dataUncode(widget)
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ORDERS'),
-      backgroundColor: AppTheme.primaryColor,),
+        backgroundColor: AppTheme.primaryColor,),
       body: Container(
         padding: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-          Container(
+            Container(
 
-            padding: EdgeInsets.all(16),
-            color: Colors.grey[400],
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.all(16),
+              color: Colors.grey[400],
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                Text(widget.name,style: AppTheme.textStyle.lightHeading.copyWith(
-                  color: Colors.white
-                ),),
-                SizedBox(height: SizeConfig.heightMultiplier*1,),
-                Text(widget.mobile,style: AppTheme.textStyle.lightHeading.copyWith(
-                    color: Colors.white
-                ),),
-              ],),
-              Text("SN./"+widget.id,style: AppTheme.textStyle.lightHeading.copyWith(
-                  color: Colors.white
-              ),),
-            ],),
-          ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(widget.name,style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white
+                      ),),
+                      SizedBox(height: SizeConfig.heightMultiplier*1,),
+                      Text(widget.mobile,style: AppTheme.textStyle.lightHeading.copyWith(
+                          color: Colors.white
+                      ),),
+                    ],),
+                  Text("SN./"+widget.id,style: AppTheme.textStyle.lightHeading.copyWith(
+                      color: Colors.white
+                  ),),
+                ],),
+            ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
-          Text('Totel Items ( '+widget.orderDetails.length.toString()+" )",style: AppTheme.textStyle.lightHeading.copyWith(
+            Text('Totel Items ( '+widget.orderDetails.length.toString()+" )",style: AppTheme.textStyle.lightHeading.copyWith(
               color: Colors.black,fontSize: AppFontSize.s18,
-          ),),
+            ),),
 
             Expanded(
               flex: 2,
               child: ListView.builder(itemCount: widget.orderDetails.length ,
-              shrinkWrap: true,
-              itemBuilder: (context,int index){
-                return orderList(widget.orderDetails[index]);
-              },),
+                shrinkWrap: true,
+                itemBuilder: (context,int index){
+                  return orderList(widget.orderDetails[index]);
+                },),
             ),
             SizedBox(height: SizeConfig.heightMultiplier*2,),
             Text('Instructions',style: AppTheme.textStyle.lightHeading.copyWith(
@@ -133,53 +133,8 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
               ],
             ),
             SizedBox(height: SizeConfig.heightMultiplier*4,),
-            widget.type=="pending"?Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black)
-              ),
-              padding: EdgeInsets.all(12),
 
-              width: SizeConfig.widthMultiplier*100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Text('Accept/Reject',style: AppTheme.textStyle.heading1.copyWith(
-                    color: Colors.black,fontSize: AppFontSize.s18,
-                  ),),
-                  Container(
-                    width: SizeConfig.widthMultiplier*40,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black)
-                          ),
-                          child: GestureDetector(
-                              onTap: (){
-                                updateorder('A','');
-                              },
-                              child: Icon(Icons.done)),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.black)
-                          ),
-                          child: GestureDetector(
-                              onTap: (){
-                                _addSubCategoryDialog();
-                              },
-                              child: Icon(Icons.delete_outline)),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ):Container()
-        ],),
+          ],),
       ),
     );
   }
@@ -268,7 +223,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
           Future.delayed(Duration(seconds: 1), () {
             showDisplayAllert(
                 context: context, isSucces: true, message: data['message']);
-             AppRoutes.makeFirst(context, SearchScreen());
+            AppRoutes.makeFirst(context, SearchScreen());
           });
         } else {
           Navigator.of(context).pop(diloagContext);
@@ -301,7 +256,7 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (context,int index){
-          ToppingsDishModel toppings = orderDetails.topingMainList[index];
+            ToppingsDishModel toppings = orderDetails.topingMainList[index];
             return  ListTile(
               leading: Spacer(),
               title: Text(toppings.name,),

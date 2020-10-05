@@ -9,6 +9,7 @@ import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'order_list.dart';
 
@@ -21,11 +22,13 @@ class _LogInScreenState extends State<LogInScreen> {
   bool isLoading = false;
   TextEditingController _email_controller = new TextEditingController();
   TextEditingController _pass_controller = new TextEditingController();
+  String notification_id="";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPlayerId();
 
   }
   @override
@@ -156,7 +159,7 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
     Map<String, String> args = new Map();
     args["restaurantid"] = _email_controller.text.toString();
     args["password"] = _pass_controller.text.toString();
-    args["notificationid"] = "idididi";
+    args["notificationid"] = notification_id;
 
     API.post(API.LoginAPi, args, "").then((response) {
       loadProgress();
@@ -235,6 +238,41 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
 
   }
 
+  void getPlayerId() async {
+
+    OneSignal.shared.setSubscriptionObserver((OSSubscriptionStateChanges changes) {
+
+      if(changes.to.subscribed)
+      {
+        print("adfasd "+changes.to.userId.toString());
+
+        notification_id = changes.to.userId.toString();
+
+        // OneSignal.shared.postNotification(OSCreateNotification(
+        //     playerIds: [notification_id],
+        //     content: "this is a test from OneSignal's Flutter SDK",
+        //     heading: "Test Notification",
+        //     buttons: [
+        //       OSActionButton(text: "test1", id: "id1"),
+        //       OSActionButton(text: "test2", id: "id2")
+        //     ]
+        // ));
+
+
+        setState(() {
+
+        });
+      }
+
+    });
+
+
+    var status = await OneSignal.shared.getPermissionSubscriptionState();
+    notification_id = status.subscriptionStatus.userId;
+    setState(() {
+
+    });
+  }
 
 }
 

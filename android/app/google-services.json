@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "355748354471",
+    "firebase_url": "https://foodfam-f92f4.firebaseio.com",
+    "project_id": "foodfam-f92f4",
+    "storage_bucket": "foodfam-f92f4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355748354471:android:46bd7cc82aa3af9b40fe82",
+        "android_client_info": {
+          "package_name": "com.gkmtit.foodfam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355748354471-erc3n0lt5fhfp0rg5hqpeo3mhooel96n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBu1n9bzhRMHa7dhtbS3k8bhaBPLFQHSeQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355748354471-erc3n0lt5fhfp0rg5hqpeo3mhooel96n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

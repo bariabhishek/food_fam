@@ -8,6 +8,7 @@ import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/size_config.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 
@@ -76,18 +77,16 @@ class _SplashScreenState extends State<SplashScreen> {
 
 
   refreshPermission() async {
-//    if (await Permission.location.request().isDenied) {
-//
-//
-//      // You can request multiple permissions at once.
-//      Map<Permission, PermissionStatus> statuses = await [
-//        Permission.location,
-//        Permission.locationWhenInUse,
-//        Permission.locationAlways
-//      ].request();
-//      print(statuses[Permission.location]);
-//      // Either the permission was already granted before or the user just granted it.
-//    }
+   if (await Permission.storage.request().isDenied) {
+
+
+     // You can request multiple permissions at once.
+     Map<Permission, PermissionStatus> statuses = await [
+       Permission.storage,
+     ].request();
+
+     // Either the permission was already granted before or the user just granted it.
+   }
 
 
    callScreen();

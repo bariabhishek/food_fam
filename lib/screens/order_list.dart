@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:food_fam/api/API.dart';
 import 'package:food_fam/model/aproved_order_list.dart';
 import 'package:food_fam/model/orderList.dart';
+import 'package:food_fam/model/order_details.dart';
+import 'package:food_fam/model/toppings_model.dart';
 import 'package:food_fam/screens/drawer.dart';
 import 'package:food_fam/screens/order_details.dart';
 import 'package:food_fam/theme/theme.dart';
@@ -11,6 +13,8 @@ import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
+
+import 'history_order_details.dart';
 
 class OrderListScreen extends StatefulWidget {
   @override
@@ -39,7 +43,7 @@ class _homeScreenState extends State<OrderListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AllDrawerScreen(),
+
       appBar: AppBar( backgroundColor: AppTheme.primaryColor,
       title: Text('ORDERS HISTORY'),),
       body: SingleChildScrollView(
@@ -77,7 +81,9 @@ class _homeScreenState extends State<OrderListScreen> {
         padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
         child: ListTile(
           onTap: (){
-          //  AppRoutes.goto(context, OrderDetailsPic("approverd",list2[index],id,name,mobile,status,orderDetails));
+
+            AppRoutes.goto(context, HistoryOrderDetails("pending", id, name, mobile, status,
+                list[index].orderDetails));
           },
           title: Text(name),
           trailing:  Text(status),
@@ -115,7 +121,37 @@ class _homeScreenState extends State<OrderListScreen> {
             String mobile = dlist[i]["mobile"].toString();
             String status = dlist[i]["status"].toString();
 
-            list.add(new OrderList(id,name,mobile,status));
+            List order = dlist[i]['order'];
+            List<OrderDetails> orderDetails = new List();
+
+            for (var data in order) {
+              var order_id = data['id'].toString();
+              var orderName = data['name'].toString();
+              var orderPrice = data['price'].toString();
+              var orderQuantity = data['quantity'].toString();
+              var orderConditions = data['conditions'].toString();
+              var orderassociatedModel = data['associatedModel'].toString();
+
+
+              List toping = data['attributes']["toppings"];
+              List <ToppingsDishModel> topingMainList = new List();
+
+              toping.forEach((element) {
+
+                topingMainList.add(new ToppingsDishModel(element["name"],int.parse(element["price"])));
+
+              });
+
+              orderDetails.add(new OrderDetails(
+                  order_id,
+                  orderName,
+                  orderPrice,
+                  orderQuantity,
+                  orderConditions,
+                  orderassociatedModel,topingMainList));
+            }
+
+            list.add(new OrderList(id,name,mobile,status,orderDetails));
           }
 
 /*

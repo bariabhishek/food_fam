@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:food_fam/api/API.dart';
 import 'package:food_fam/theme/theme.dart';
@@ -8,6 +10,9 @@ import 'package:food_fam/utils/app_assets.dart';
 import 'package:food_fam/utils/app_routes.dart';
 import 'package:food_fam/utils/display_alert_widget.dart';
 import 'package:food_fam/utils/size_config.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../api/API.dart';
 
 class foodfamProfile extends StatefulWidget {
   @override
@@ -16,6 +21,7 @@ class foodfamProfile extends StatefulWidget {
 
 
 class _foodfamState extends State<foodfamProfile> {
+  File profile;
   String Rname='';
   String id='';
   String ownermobile='';
@@ -37,7 +43,7 @@ class _foodfamState extends State<foodfamProfile> {
     ShareMananer.getUserDetails().then((data){
       id=data["token"].toString();
       print(Rname);
-      profile();
+      getProfile(data["token"].toString());
     });
 
 
@@ -66,19 +72,24 @@ class _foodfamState extends State<foodfamProfile> {
 
               child: Column(
                 children: <Widget>[
-                  Center(
-                    child:ClipRRect(
+                  GestureDetector(
+                    onTap:() => pickProfileImage(),
+                    child: Center(
+                      child:ClipRRect(
 
-                      borderRadius: BorderRadius.circular(100.0),
-                      /*  decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100.0),
+                        /*  decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(100.0),
       ),*/
-                      child:  FadeInImage.assetNetwork(
-                        width: 60.0,
-                        height: 60.0,
-                        placeholder: Assets.logo,image: logo,fit: BoxFit.cover,),
-                    )
+                        child:  profile==null?FadeInImage.assetNetwork(
+                          image: API.imageBaseUrl+logo,
+                          width: 60.0,
+                          height: 60.0,
+                          placeholder: Assets.logo,fit: BoxFit.fill,):Image.file(profile, width: 60.0,
+                          height: 60.0,fit: BoxFit.fill)
+                      )
+                    ),
                   ),
                   Text(
                     Rname.toString(),
@@ -146,6 +157,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 7,
                     child: TextField(
+                      readOnly: true,
                       controller: mobile,
                       minLines: 10,
                       maxLines: 15,
@@ -189,6 +201,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 7,
                     child: TextField(
+                      readOnly: true,
                       controller: mail,
                       minLines: 10,
                       maxLines: 15,
@@ -231,6 +244,7 @@ class _foodfamState extends State<foodfamProfile> {
                     width: SizeConfig.widthMultiplier*80,
                     height: SizeConfig.heightMultiplier * 13,
                     child: TextField(
+                      readOnly: true,
                       controller: address,
                       minLines: 10,
                       maxLines: 15,
@@ -325,7 +339,7 @@ class _foodfamState extends State<foodfamProfile> {
     );
   }
 
-  profile() async {
+  getProfile(String restaurantid) async {
    // loadProgress();
     /*   Response response;
     Dio dio = new Dio();
@@ -338,7 +352,7 @@ class _foodfamState extends State<foodfamProfile> {
 
 
     Map<String, String> args = new Map();
-    args["restaurantid"]=id;
+    args["restaurantid"]=restaurantid;
 
     API.post(API.ProfileAPi,args,"").then((response){
 
@@ -406,6 +420,49 @@ class _foodfamState extends State<foodfamProfile> {
 
   report() {
 
+  }
+
+  pickProfileImage()async{
+    final ImagePicker _picker = ImagePicker();
+    final pickedFile = await _picker.getImage(source: ImageSource.gallery,imageQuality: 50);
+
+    if(pickedFile!=null)
+    {
+      profile = File(pickedFile.path);
+      setState(() {
+
+      });
+      uploadProfile();
+    }
+
+
+  }
+
+  uploadProfile()async{
+    _dialog();
+    Dio dio = new Dio();
+    FormData formData= FormData.fromMap({
+      "logo": await MultipartFile.fromFile(profile.path, filename:profile.path.split('/').last),
+      "retaurantid": id,
+    });
+
+    final response  = await dio.post(
+        API.editProfile,
+        data: formData,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: "multipart/form-data",
+        }));
+
+    Navigator.of(context).pop(diloagContext);
+    final data = json.decode(response.data);
+
+    print("aaaa"+data.toString());
+    if(response.statusCode==200)
+    {
+      showDisplayAllert(message:data["message"].toString(),isSucces: true,context: context);
+    }else {
+      showDisplayAllert(message:"Server Error".toString(),isSucces: false,context: context);
+    }
   }
 
   void _updateProfile(

@@ -39,10 +39,18 @@ dependencies:
   grouped_buttons: ^1.0.4
   dio: ^3.0.10
   image_picker: ^0.6.7+7
+  permission_handler: ^5.0.1+1
+  onesignal_flutter: ^2.6.1
+  flutter_launcher_icons: ^0.8.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/foodfam.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

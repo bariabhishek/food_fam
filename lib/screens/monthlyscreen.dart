@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:food_fam/api/API.dart';
 import 'package:food_fam/model/order_details.dart';
 import 'package:food_fam/model/salesreport.dart';
+import 'package:food_fam/model/toppings_model.dart';
 import 'package:food_fam/theme/theme.dart';
 import 'package:food_fam/utils/ShareManager.dart';
 import 'package:food_fam/utils/app_assets.dart';
@@ -117,11 +118,19 @@ class _MonthlyScreenState extends State<MonthlyScreen> {
               var orderName=data['name'].toString();
               var orderPrice=data['price'].toString();
               var orderQuantity=data['quantity'].toString();
-              var orderAttributes=data['attributes'].toString();
               var orderConditions=data['conditions'].toString();
               var  orderassociatedModel=data['associatedModel'].toString();
 
-              orderDetails.add(new OrderDetails(order_id, orderName, orderPrice, orderQuantity, orderAttributes, orderConditions, orderassociatedModel));
+              List toping = data['attributes']["toppings"];
+              List <ToppingsDishModel> topingMainList = new List();
+
+              toping.forEach((element) {
+
+                topingMainList.add(new ToppingsDishModel(element["name"],int.parse(element["price"])));
+
+              });
+
+              orderDetails.add(new OrderDetails(order_id, orderName, orderPrice, orderQuantity, orderConditions, orderassociatedModel,topingMainList));
 
             }
 
@@ -170,22 +179,39 @@ class _MonthlyScreenState extends State<MonthlyScreen> {
           physics: NeverScrollableScrollPhysics(),
           itemCount: listreport[index].orderDetailList.length,
           itemBuilder: (context , int index2 ){
-            return orderUI(
-              listreport[index].orderDetailList[index2].orderName,
-              listreport[index].orderDetailList[index2].orderPrice,
-              listreport[index].orderDetailList[index2].orderQuantity,
+            return orderList(
+              listreport[index].orderDetailList[index2],
             );
           },)
       ],
     );
   }
 
-  Widget orderUI(String orderName, String orderPrice, String orderQuantity) {
-    return ListTile(
-      leading: Image.asset(Assets.veg,height: 16,width: 16,),
-      title: Text(orderName),
-      subtitle: Text(orderQuantity),
-      trailing: Text('₹'+orderPrice),
+  Widget orderList(OrderDetails orderDetails) {
+
+
+    return Column(
+      children: [
+        ListTile(
+          leading: Image.asset(Assets.veg,height: 16,width: 16,),
+          title: Text(orderDetails.orderName),
+          subtitle: Text(orderDetails.orderQuantity),
+          trailing: Text('₹'+orderDetails.orderPrice),
+        ),
+        ListView.builder(
+          itemCount: orderDetails.topingMainList.length ,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (context,int index){
+            ToppingsDishModel toppings = orderDetails.topingMainList[index];
+            return  ListTile(
+              leading: Spacer(),
+              title: Text(toppings.name,),
+              trailing: Text('₹'+toppings.price.toString()),
+            );
+          },),
+
+      ],
     );
   }
 }

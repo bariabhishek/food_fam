@@ -8,10 +8,8 @@ class API {
   static HttpService _httpService = HttpService.getInstance();
   //static String token;
   //static String session_id;
-
-  static String DOMAIN_NAME = "";
-  static String GOOGLE_API = "AIzaSyB4BfDrt-mCQCC1pzrGUAjW_2PRrGNKh_U";
   //https://foodfam.in/api/login.php
+  static String oneSignalAppID = "0fbbec45-f6bc-4cc3-883d-0484c8afeadc";
   static String BASE_URL = "https://foodfam.in/api/";
   static String LoginAPi = BASE_URL+"login.php";
   static String ProfileAPi = BASE_URL+"profile.php";
@@ -39,6 +37,9 @@ class API {
   static String deleteTopping = BASE_URL+"deletetopping.php";
   static String addTopping = BASE_URL+"addtopping.php";
   static String editDish = BASE_URL+"editdishes.php";
+  static String editProfile = BASE_URL+"editimage.php";
+  static String imageBaseUrl = "http://foodfam.in//foodfamAdmin/light/assets/logo/";
+
 
 
   static Future<Response> post(String api, Map<String, String> args,String token) {

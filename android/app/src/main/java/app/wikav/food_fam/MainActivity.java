@@ -1,4 +1,4 @@
-package app.wikav.food_fam;
+package com.gkmtit.foodfam;
 
 import io.flutter.embedding.android.FlutterActivity;
 
