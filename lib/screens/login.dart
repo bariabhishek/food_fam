@@ -244,20 +244,7 @@ if(_email_controller.text.toString().isNotEmpty && _pass_controller.text.toStrin
 
       if(changes.to.subscribed)
       {
-        print("adfasd "+changes.to.userId.toString());
-
         notification_id = changes.to.userId.toString();
-
-        // OneSignal.shared.postNotification(OSCreateNotification(
-        //     playerIds: [notification_id],
-        //     content: "this is a test from OneSignal's Flutter SDK",
-        //     heading: "Test Notification",
-        //     buttons: [
-        //       OSActionButton(text: "test1", id: "id1"),
-        //       OSActionButton(text: "test2", id: "id2")
-        //     ]
-        // ));
-
 
         setState(() {
 

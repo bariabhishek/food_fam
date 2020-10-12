@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_fam/api/API.dart';
 import 'package:food_fam/screens/login.dart';
 import 'package:food_fam/screens/menu_screen.dart';
 import 'package:food_fam/screens/searchScreen.dart';
@@ -6,7 +7,6 @@ import 'package:food_fam/splashScreen/splashScreen.dart';
 import 'package:food_fam/utils/size_config.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
-import 'api/API.dart';
 import 'screens/dish_view_page.dart';
 
 void main(){

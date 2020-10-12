@@ -76,6 +76,11 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('ORDERS'),
+      actions: [
+        IconButton(icon: Icon(Icons.app_blocking), onPressed: (){
+          _addSpam(widget.mobile);
+        })
+      ],
       backgroundColor: AppTheme.primaryColor,),
       body: Container(
         padding: EdgeInsets.all(12),
@@ -311,5 +316,58 @@ class _OrderDetailsPicState extends State<OrderDetailsPic> {
 
       ],
     );
+  }
+
+
+
+  void _addSpam(mobile) {
+    showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Add SubCategory'),
+          content:Text('Are you sure to spam this user ?'),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Cancel"),
+            ),
+            FlatButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _spamUser(mobile);
+              },
+              child: Text("Add"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _spamUser(mobile) {
+    Map<String, String> args = new Map();
+    _dialog();
+    args["reason"] = "not allow";
+    args["restaurantid"] = resId;
+    args["mobile"] = mobile;
+    API.post(API.addSubCategory, args, "").then((response) {
+      print(response.body.toString());
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        if (data['success'] == 1) {
+          showDisplayAllert(context: context, isSucces: true, message: data['message']);
+            Navigator.of(context).pop(diloagContext);
+            Navigator.pop(context);
+
+        }else{
+          Navigator.of(context).pop(diloagContext);
+          showDisplayAllert(context: context, isSucces: false, message: data['message']);
+
+        }
+      }
+    });
   }
 }

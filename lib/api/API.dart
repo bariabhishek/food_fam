@@ -26,6 +26,7 @@ class API {
   static String editCategory = BASE_URL+"editcategory.php";
   static String editSubcategory = BASE_URL+"editsubcategory.php";
   static String addSubCategory = BASE_URL+"addsubcategory.php";
+  static String addSpam = BASE_URL+"addspamuser.php";
   static String coupanList = BASE_URL+"coupon.php";
   static String coupanAdd = BASE_URL+"addcoupon.php";
   static String coupanDelete= BASE_URL+"deletecoupon.php";
